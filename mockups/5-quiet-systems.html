@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shane Carroll — product, systems, AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,340;0,9..144,420;0,9..144,560;1,9..144,340&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf8f2;
+    --ink: #23271f;
+    --body: #3c4038;
+    --muted: #8b867a;
+    --teal: #0e7a6a;
+    --gold: #b9861e;
+    --hairline: #e4ded0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  ::selection { background: #d7ece8; }
+  body {
+    background: var(--bg);
+    color: var(--body);
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 340;
+    line-height: 1.72;
+    font-size: 1.04rem;
+  }
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+  .wrap { max-width: 660px; margin: 0 auto; padding: 0 1.6rem; }
+  a { color: inherit; }
+
+  /* ── header ─────────────────────────────── */
+  .topline {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .72rem; letter-spacing: .14em; color: var(--muted);
+    padding-top: 2.2rem;
+    display: flex; justify-content: space-between; gap: 1rem;
+  }
+  .topline .pulse { color: var(--teal); }
+  header.site { padding: 4.5rem 0 3.5rem; }
+  .name {
+    font-size: 2.35rem; font-weight: 420; letter-spacing: -0.015em;
+    color: var(--ink); line-height: 1.1;
+  }
+  .thesis {
+    margin-top: 1.2rem; font-size: 1.16rem; font-style: italic;
+    color: #5d594e; max-width: 44ch;
+  }
+  .thesis em { color: var(--teal); font-style: italic; }
+  nav { margin-top: 2.6rem; display: flex; gap: 2.4rem; }
+  nav a {
+    font-family: 'IBM Plex Mono', monospace; font-size: .76rem;
+    letter-spacing: .18em; text-transform: lowercase;
+    color: var(--muted); text-decoration: none;
+  }
+  nav a.active { color: var(--teal); }
+  nav a:hover { color: var(--ink); }
+  nav a.active::before { content: "▸ "; }
+
+  .rule { border: none; height: 1px; background: var(--hairline); }
+
+  /* ── index ──────────────────────────────── */
+  main { padding: 3.2rem 0 4rem; }
+  .idx-label {
+    font-family: 'IBM Plex Mono', monospace; font-size: .7rem;
+    letter-spacing: .22em; color: var(--muted); margin-bottom: 2rem;
+  }
+  .entry {
+    display: grid; grid-template-columns: 92px 1fr; gap: 1.5rem;
+    padding: 1.45rem 0; text-decoration: none;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .entry:last-of-type { border-bottom: none; }
+  .entry .date {
+    font-family: 'IBM Plex Mono', monospace; font-size: .72rem;
+    color: var(--muted); padding-top: .5rem; letter-spacing: .06em;
+  }
+  .entry h2 { font-size: 1.32rem; font-weight: 420; color: var(--ink); line-height: 1.3; transition: color .15s; }
+  .entry:hover h2 { color: var(--teal); }
+  .entry p { margin-top: .4rem; font-size: .97rem; color: #6a665a; max-width: 52ch; }
+  .entry .strand {
+    font-family: 'IBM Plex Mono', monospace; font-size: .66rem;
+    letter-spacing: .14em; color: var(--gold); margin-bottom: .35rem;
+  }
+
+  /* ── divider between "pages" of the mockup ─ */
+  .pagebreak {
+    background: var(--ink); color: #cfcabb;
+    font-family: 'IBM Plex Mono', monospace; font-size: .7rem;
+    letter-spacing: .25em; text-align: center; padding: .7rem;
+  }
+
+  /* ── article view ───────────────────────── */
+  article.post { padding: 4.5rem 0 3rem; }
+  .post .strand { font-family: 'IBM Plex Mono', monospace; font-size: .7rem; letter-spacing: .2em; color: var(--gold); }
+  .post h1 {
+    margin-top: 1rem; font-size: 2.15rem; font-weight: 420;
+    color: var(--ink); line-height: 1.18; letter-spacing: -0.015em;
+  }
+  .post .meta {
+    margin-top: 1.1rem; font-family: 'IBM Plex Mono', monospace;
+    font-size: .72rem; color: var(--muted); letter-spacing: .1em;
+  }
+  .post .meta span { color: var(--teal); }
+  .post .body { margin-top: 2.6rem; }
+  .post .body p { margin-bottom: 1.4rem; max-width: 62ch; }
+  .post .body p:first-child::first-letter {
+    font-size: 3.1rem; font-weight: 420; float: left;
+    line-height: .85; padding: .08em .12em 0 0; color: var(--teal);
+  }
+  blockquote {
+    margin: 2.2rem 0; padding-left: 1.4rem;
+    border-left: 2px solid var(--teal);
+    font-style: italic; font-size: 1.15rem; color: #50584f;
+    max-width: 50ch;
+  }
+  .aside {
+    margin: 2.2rem 0; padding: 1.1rem 1.3rem;
+    background: #f2eee2; border-radius: 8px;
+    font-size: .92rem; color: #6a665a;
+  }
+  .aside .mono { font-size: .68rem; letter-spacing: .18em; color: var(--gold); display: block; margin-bottom: .4rem; }
+
+  footer { border-top: 1px solid var(--hairline); }
+  .foot { padding: 2.4rem 0 4rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; align-items: baseline; }
+  .foot .loop { font-family: 'IBM Plex Mono', monospace; font-size: .74rem; color: var(--teal); letter-spacing: .08em; }
+  .foot .links { font-family: 'IBM Plex Mono', monospace; font-size: .72rem; color: var(--muted); letter-spacing: .12em; }
+  .foot .links a { text-decoration: none; }
+  .foot .links a:hover { color: var(--ink); }
+  @media (max-width: 560px) { .entry { grid-template-columns: 1fr; gap: .3rem; } }
+</style>
+</head>
+<body>
+
+  <div class="wrap">
+    <div class="topline">
+      <span>SHANE CARROLL</span>
+      <span><span class="pulse">●</span> WRITING IN PUBLIC</span>
+    </div>
+
+    <header class="site">
+      <div class="name">Product, systems,<br>and the machines we keep.</div>
+      <p class="thesis">I'm an AI product manager. I write about building with intelligent systems — and about <em>steering</em> them, in products and in politics.</p>
+      <nav>
+        <a href="#" class="active">writing</a>
+        <a href="#">work</a>
+        <a href="#">about</a>
+        <a href="#">rss</a>
+      </nav>
+    </header>
+  </div>
+
+  <hr class="rule">
+
+  <div class="wrap">
+    <main>
+      <div class="idx-label">INDEX — NEWEST FIRST</div>
+
+      <a class="entry" href="#">
+        <div class="date">2026-06-02</div>
+        <div>
+          <div class="strand">PRACTICE</div>
+          <h2>The Maker Framework</h2>
+          <p>A way of doing product work when the bottleneck stops being code: orient the human toward judgment, the machine toward volume.</p>
+        </div>
+      </a>
+
+      <a class="entry" href="#">
+        <div class="date">2026-05-18</div>
+        <div>
+          <div class="strand">RELAY</div>
+          <h2>What Building Relay Taught Me About Feedback</h2>
+          <p>Cybersyn as a design brief. Notes on building a product whose whole personality is a control loop.</p>
+        </div>
+      </a>
+
+      <a class="entry" href="#">
+        <div class="date">2026-05-04</div>
+        <div>
+          <div class="strand">SYSTEMS</div>
+          <h2>Feedback Beats Force</h2>
+          <p>Every institution that lasts is secretly a thermostat. On regulation as a kinder alternative to command — in orgs and in states.</p>
+        </div>
+      </a>
+
+      <a class="entry" href="#">
+        <div class="date">2026-04-20</div>
+        <div>
+          <div class="strand">PRACTICE</div>
+          <h2>Shipping With Agents: A PM's Field Notes</h2>
+          <p>What changes about roadmaps, specs, and review when half the team doesn't sleep.</p>
+        </div>
+      </a>
+    </main>
+  </div>
+
+  <div class="pagebreak">▼ SAMPLE POST PAGE ▼</div>
+
+  <div class="wrap">
+    <article class="post">
+      <div class="strand">PRACTICE</div>
+      <h1>The Maker Framework</h1>
+      <div class="meta">2026-06-02 · 11 min · <span>shane carroll</span></div>
+      <div class="body">
+        <p>Most product frameworks assume the scarce thing is engineering time. Pick wisely, sequence ruthlessly, ship what fits. That assumption is quietly dying, and most PM practice hasn't noticed yet.</p>
+        <p>The Maker Framework starts from the opposite premise: generation is cheap, judgment is scarce. When a team can produce ten plausible versions of anything by lunch, the job is no longer choosing what to build. It's building the apparatus that decides what's <em>good</em>.</p>
+        <blockquote>The PM's artifact used to be the spec. Now it's the evaluation — the encoded taste of the team.</blockquote>
+        <p>This sounds like process talk, but it's really a systems claim. A team with cheap generation and no evaluation loop isn't faster; it's a firehose aimed at a backlog. The loop is the product behind the product.</p>
+        <div class="aside">
+          <span class="mono">MARGIN NOTE</span>
+          Stafford Beer would have called the evaluation layer System 4 — the part of the org that looks outward and decides what "better" means. Most AI-era teams are all System 1, no System 4.
+        </div>
+        <p>In the rest of this post I'll lay out the three loops the framework names — make, judge, steer — and what each one demands from a PM in practice.</p>
+      </div>
+    </article>
+  </div>
+
+  <footer>
+    <div class="wrap foot">
+      <div class="loop">make → judge → steer ⟲</div>
+      <div class="links"><a href="#">rss</a> · <a href="#">email</a> · <a href="#">github</a> · 2026</div>
+    </div>
+  </footer>
+
+</body>
+</html>
