@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commonwealth Net · node: s.carroll</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sky: #eef3f2;
+    --panel: #ffffff;
+    --ink: #29333a;
+    --muted: #6b7a80;
+    --teal: #0e8a7d;
+    --teal-deep: #0a6157;
+    --coral: #ef7350;
+    --line: #d6e0de;
+    --good: #2c9d62;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--sky);
+    color: var(--ink);
+    font-family: 'Inter', system-ui, sans-serif;
+    line-height: 1.65;
+  }
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+
+  /* ── System status bar ─────────────────────────────── */
+  .statusbar {
+    background: var(--ink); color: #cfe3df;
+    font-family: 'IBM Plex Mono', monospace; font-size: .76rem;
+    padding: .55rem 1.25rem;
+    display: flex; gap: 2rem; flex-wrap: wrap; align-items: center;
+  }
+  .statusbar .net { color: #fff; font-weight: 600; letter-spacing: .08em; }
+  .statusbar .stat::before { content: "▸ "; color: var(--coral); }
+  .statusbar .up { color: #7ee2a8; }
+  .blink { animation: blink 2.4s step-end infinite; }
+  @keyframes blink { 50% { opacity: .25; } }
+
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 1.5rem; }
+
+  header.site { padding: 3.2rem 0 2.4rem; }
+  .node-label { font-family: 'IBM Plex Mono', monospace; font-size: .8rem; color: var(--teal); letter-spacing: .1em; margin-bottom: .6rem; }
+  h1.site-name { font-size: 2.2rem; font-weight: 700; letter-spacing: -0.03em; }
+  .site-desc { color: var(--muted); margin-top: .5rem; max-width: 54ch; }
+
+  nav { margin-top: 1.8rem; display: flex; gap: .6rem; }
+  nav a {
+    font-family: 'IBM Plex Mono', monospace; font-size: .82rem;
+    text-decoration: none; color: var(--teal-deep);
+    border: 1px solid var(--line); background: var(--panel);
+    padding: .45rem 1rem; border-radius: 8px;
+  }
+  nav a.active { background: var(--teal); color: #fff; border-color: var(--teal); }
+  nav a:hover { border-color: var(--teal); }
+
+  /* ── Readout strip ─────────────────────────────────── */
+  .readouts {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: .9rem;
+    margin-bottom: 2.6rem;
+  }
+  .readout {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+    padding: .9rem 1.1rem;
+  }
+  .readout .k { font-family: 'IBM Plex Mono', monospace; font-size: .68rem; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); }
+  .readout .v { font-size: 1.25rem; font-weight: 700; margin-top: .2rem; }
+  .readout .v small { font-size: .75rem; font-weight: 500; color: var(--good); }
+
+  /* ── Log entries ───────────────────────────────────── */
+  .log-head {
+    font-family: 'IBM Plex Mono', monospace; font-size: .78rem;
+    letter-spacing: .15em; text-transform: uppercase; color: var(--muted);
+    display: flex; align-items: center; gap: .9rem; margin-bottom: 1.2rem;
+  }
+  .log-head::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+  .log {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+    padding: 1.6rem 1.8rem; margin-bottom: 1rem;
+    display: grid; grid-template-columns: 1fr auto; gap: 1rem;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .log:hover { border-color: var(--teal); box-shadow: 0 2px 14px rgba(14,138,125,.10); }
+  .log .id { font-family: 'IBM Plex Mono', monospace; font-size: .74rem; color: var(--coral); letter-spacing: .08em; margin-bottom: .45rem; }
+  .log h2 { font-size: 1.3rem; letter-spacing: -0.02em; }
+  .log h2 a { color: var(--ink); text-decoration: none; }
+  .log h2 a:hover { color: var(--teal-deep); }
+  .log p { color: var(--muted); font-size: .96rem; margin-top: .45rem; max-width: 58ch; }
+  .log .when { font-family: 'IBM Plex Mono', monospace; font-size: .74rem; color: var(--muted); text-align: right; white-space: nowrap; }
+
+  .featured { border-left: 4px solid var(--teal); }
+  .featured .id::after { content: "  · LATEST"; color: var(--teal); }
+
+  /* ── VSM footer diagram ────────────────────────────── */
+  footer {
+    margin-top: 3.5rem; border-top: 1px solid var(--line);
+    background: var(--panel);
+  }
+  .foot-inner { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+  .foot-inner .mono { font-size: .75rem; color: var(--muted); }
+  .loop { font-family: 'IBM Plex Mono', monospace; font-size: .8rem; color: var(--teal); }
+  @media (max-width: 680px) {
+    .readouts { grid-template-columns: repeat(2, 1fr); }
+    .log { grid-template-columns: 1fr; }
+    .log .when { text-align: left; }
+  }
+</style>
+</head>
+<body>
+  <div class="statusbar">
+    <span class="net">COMMONWEALTH NET</span>
+    <span class="stat">grid <span class="up">102% renewable</span></span>
+    <span class="stat">everyone <span class="up">fed</span></span>
+    <span class="stat">avg workweek <span class="up">19h</span></span>
+    <span class="stat blink">node s.carroll · transmitting</span>
+  </div>
+
+  <div class="wrap">
+    <header class="site">
+      <div class="node-label">node: s.carroll · est. 2026 · status: open</div>
+      <h1 class="site-name">Shane Carroll</h1>
+      <p class="site-desc">Logs on cybernetics, politics, and collectively-owned machines — written from the world Cybersyn was reaching for.</p>
+      <nav>
+        <a href="#" class="active">logs/</a>
+        <a href="#">systems/</a>
+        <a href="#">about/</a>
+        <a href="#">rss</a>
+      </nav>
+    </header>
+
+    <main>
+      <div class="readouts">
+        <div class="readout"><div class="k">Logs filed</div><div class="v">04</div></div>
+        <div class="readout"><div class="k">Ideas in queue</div><div class="v">11</div></div>
+        <div class="readout"><div class="k">Feedback loops</div><div class="v">∞ <small>nominal</small></div></div>
+        <div class="readout"><div class="k">Stress level</div><div class="v">low <small>▼ by design</small></div></div>
+      </div>
+
+      <div class="log-head">Transmission log</div>
+
+      <article class="log featured">
+        <div>
+          <div class="id">LOG 004</div>
+          <h2><a href="#">On Owning the AI Together</a></h2>
+          <p>Intelligence is becoming infrastructure. Infrastructure has owners. This log argues the ownership question is the whole ballgame — and sketches what a socially-held model commons would actually run on.</p>
+        </div>
+        <div class="when">2026-06-09<br>12 min</div>
+      </article>
+
+      <article class="log">
+        <div>
+          <div class="id">LOG 003</div>
+          <h2><a href="#">Feedback Beats Force</a></h2>
+          <p>Beer's ghost, the algedonic signal, and why every durable institution is secretly a thermostat. Command is brittle; regulation is kind.</p>
+        </div>
+        <div class="when">2026-05-14<br>9 min</div>
+      </article>
+
+      <article class="log">
+        <div>
+          <div class="id">LOG 002</div>
+          <h2><a href="#">The Floor Is High</a></h2>
+          <p>Post-scarcity isn't about infinite stuff. It's about removing the threat. An economics of unconditional comfort, with receipts.</p>
+        </div>
+        <div class="when">2026-04-22<br>12 min</div>
+      </article>
+
+      <article class="log">
+        <div>
+          <div class="id">LOG 001</div>
+          <h2><a href="#">Notes Toward Industrial Democracy</a></h2>
+          <p>You vote for your mayor and obey your manager. First log: why the workplace is the last divine-right monarchy, and what replaces it.</p>
+        </div>
+        <div class="when">2026-03-30<br>7 min</div>
+      </article>
+    </main>
+  </div>
+
+  <footer>
+    <div class="foot-inner">
+      <div class="loop">◯──▶◯──▶◯──▶ you, reading, close the loop ─┐<br>└──────────────◀──────────────────────────┘</div>
+      <div class="mono">© the commons · replication encouraged</div>
+    </div>
+  </footer>
+</body>
+</html>

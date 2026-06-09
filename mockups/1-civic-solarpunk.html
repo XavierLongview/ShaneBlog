@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shane Carroll · Dispatches from the Commonwealth</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #faf6ec;
+    --paper-deep: #f3ecdb;
+    --ink: #21302a;
+    --green: #1d4d3b;
+    --green-soft: #2e6b53;
+    --gold: #e8a13a;
+    --terracotta: #c75b39;
+    --sky: #7fa8a0;
+    --line: #d8cfb8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Source Serif 4', Georgia, serif;
+    line-height: 1.65;
+  }
+  .grotesk { font-family: 'Space Grotesk', sans-serif; }
+
+  /* ── Transit-line top border ───────────────────────── */
+  .transit-band {
+    display: flex; height: 6px;
+  }
+  .transit-band span { flex: 1; }
+  .transit-band span:nth-child(1) { background: var(--green); }
+  .transit-band span:nth-child(2) { background: var(--gold); }
+  .transit-band span:nth-child(3) { background: var(--terracotta); }
+  .transit-band span:nth-child(4) { background: var(--sky); }
+
+  header {
+    max-width: 880px; margin: 0 auto; padding: 3.5rem 1.5rem 2.5rem;
+  }
+  .masthead { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+  .site-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.9rem; font-weight: 700; letter-spacing: -0.02em;
+    color: var(--green);
+  }
+  .site-title .sun { color: var(--gold); margin-right: .4rem; }
+  .tagline { font-style: italic; color: var(--green-soft); font-size: 1.02rem; }
+
+  /* ── Transit map nav ───────────────────────────────── */
+  nav { margin-top: 2.2rem; }
+  nav ul { list-style: none; display: flex; gap: 2.5rem; }
+  nav a {
+    font-family: 'Space Grotesk', sans-serif;
+    text-decoration: none; color: var(--ink); font-weight: 500;
+    font-size: .95rem; letter-spacing: .04em; text-transform: uppercase;
+    display: flex; align-items: center; gap: .55rem;
+    padding-bottom: .35rem; border-bottom: 3px solid transparent;
+  }
+  nav a .stop {
+    width: 13px; height: 13px; border-radius: 50%;
+    border: 3px solid var(--green); background: var(--paper);
+  }
+  nav a.active .stop { background: var(--gold); border-color: var(--green); }
+  nav a.active { border-bottom-color: var(--gold); }
+  nav a:hover .stop { background: var(--terracotta); }
+
+  /* ── Hero dispatch ─────────────────────────────────── */
+  main { max-width: 880px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+  .hero {
+    border: 2px solid var(--green);
+    border-radius: 14px;
+    padding: 2.4rem 2.6rem;
+    margin-bottom: 3.2rem;
+    background: linear-gradient(160deg, var(--paper) 55%, #f6edd6 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: ""; position: absolute; right: -55px; top: -55px;
+    width: 190px; height: 190px; border-radius: 50%;
+    background: radial-gradient(circle, var(--gold) 0%, var(--gold) 38%, transparent 39%),
+      repeating-conic-gradient(var(--gold) 0deg 4deg, transparent 4deg 18deg);
+    opacity: .35;
+  }
+  .kicker {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: .78rem; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--terracotta); font-weight: 700; margin-bottom: .9rem;
+  }
+  .hero h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2.5rem; line-height: 1.12; letter-spacing: -0.025em;
+    color: var(--green); margin-bottom: 1.1rem; max-width: 18ch;
+  }
+  .hero p { font-size: 1.13rem; max-width: 56ch; color: #3a4a42; }
+  .hero .read {
+    display: inline-block; margin-top: 1.6rem;
+    font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+    color: var(--paper); background: var(--green);
+    padding: .6rem 1.3rem; border-radius: 999px; text-decoration: none;
+    font-size: .9rem; letter-spacing: .05em;
+  }
+  .hero .read:hover { background: var(--terracotta); }
+
+  /* ── Dispatch list ─────────────────────────────────── */
+  .section-label {
+    font-family: 'Space Grotesk', sans-serif;
+    display: flex; align-items: center; gap: 1rem;
+    font-size: .8rem; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--green-soft); font-weight: 700; margin-bottom: 1.8rem;
+  }
+  .section-label::after { content: ""; flex: 1; height: 3px; background:
+    repeating-linear-gradient(90deg, var(--green) 0 26px, var(--gold) 26px 52px, var(--terracotta) 52px 78px, var(--sky) 78px 104px);
+    border-radius: 2px; }
+
+  .dispatch {
+    display: grid; grid-template-columns: 110px 1fr; gap: 1.6rem;
+    padding: 1.7rem 0; border-bottom: 1px solid var(--line);
+  }
+  .dispatch:last-of-type { border-bottom: none; }
+  .d-meta {
+    font-family: 'Space Grotesk', sans-serif; font-size: .8rem;
+    color: var(--green-soft); text-transform: uppercase; letter-spacing: .08em;
+    padding-top: .35rem;
+  }
+  .d-meta .num { display: block; font-size: 1.5rem; font-weight: 700; color: var(--gold); letter-spacing: 0; }
+  .dispatch h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.45rem; letter-spacing: -0.015em; }
+  .dispatch h2 a { color: var(--ink); text-decoration: none; }
+  .dispatch h2 a:hover { color: var(--terracotta); }
+  .dispatch p { margin-top: .5rem; color: #4a5750; max-width: 60ch; }
+  .d-tags { margin-top: .8rem; display: flex; gap: .5rem; }
+  .d-tags span {
+    font-family: 'Space Grotesk', sans-serif; font-size: .72rem;
+    border: 1.5px solid var(--green); color: var(--green);
+    padding: .15rem .65rem; border-radius: 999px; letter-spacing: .05em;
+  }
+
+  footer {
+    border-top: 2px solid var(--green);
+    background: var(--green); color: #e9e2cd;
+    margin-top: 2rem;
+  }
+  .foot-inner { max-width: 880px; margin: 0 auto; padding: 2.2rem 1.5rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+  footer .motto { font-style: italic; }
+  footer .grotesk { font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); }
+  @media (max-width: 640px) {
+    .dispatch { grid-template-columns: 1fr; gap: .4rem; }
+    .hero h1 { font-size: 1.9rem; }
+  }
+</style>
+</head>
+<body>
+  <div class="transit-band"><span></span><span></span><span></span><span></span></div>
+
+  <header>
+    <div class="masthead">
+      <div class="site-title"><span class="sun">☀</span>Shane Carroll</div>
+      <div class="tagline">Dispatches from the Commonwealth</div>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#" class="active"><span class="stop"></span>Writing</a></li>
+        <li><a href="#"><span class="stop"></span>Public Works</a></li>
+        <li><a href="#"><span class="stop"></span>About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <article class="hero">
+      <div class="kicker">Dispatch № 4 · June 2026</div>
+      <h1>AI as a Public Utility</h1>
+      <p>We pipe water to every home and string power to every porch light, and nobody calls it radical. What happens when intelligence is owned the way we own the reservoir — and why the alternative is a tollbooth on thinking itself.</p>
+      <a class="read" href="#">Read the dispatch →</a>
+    </article>
+
+    <div class="section-label">Earlier dispatches</div>
+
+    <article class="dispatch">
+      <div class="d-meta"><span class="num">03</span>May 2026 · 9 min</div>
+      <div>
+        <h2><a href="#">Feedback Beats Force</a></h2>
+        <p>Stafford Beer kept saying it and we kept not listening: durable systems are steered, not commanded. What Cybersyn knew about governance that your boss still doesn't.</p>
+        <div class="d-tags"><span>cybernetics</span><span>politics</span></div>
+      </div>
+    </article>
+
+    <article class="dispatch">
+      <div class="d-meta"><span class="num">02</span>April 2026 · 12 min</div>
+      <div>
+        <h2><a href="#">The Floor Is High</a></h2>
+        <p>A tour of the economics of a society where no one stresses about rent — and an argument that abundance is a coordination problem, not a resource problem.</p>
+        <div class="d-tags"><span>economics</span><span>futures</span></div>
+      </div>
+    </article>
+
+    <article class="dispatch">
+      <div class="d-meta"><span class="num">01</span>March 2026 · 7 min</div>
+      <div>
+        <h2><a href="#">Notes Toward Industrial Democracy</a></h2>
+        <p>If you'd never seen a workplace before, would you guess it was the least democratic institution most people enter daily? First post, first principles.</p>
+        <div class="d-tags"><span>politics</span><span>work</span></div>
+      </div>
+    </article>
+  </main>
+
+  <footer>
+    <div class="foot-inner">
+      <div class="motto">the floor is high. the ceiling is shared.</div>
+      <div class="grotesk">Filed to the commons · RSS · 2026</div>
+    </div>
+  </footer>
+</body>
+</html>

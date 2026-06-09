@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shane Carroll — Writing for the World We're Owed</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f3e3bc;
+    --cream-light: #f8edd2;
+    --red: #d5482a;
+    --red-deep: #b03520;
+    --blue: #3a7ca5;
+    --green: #4d7c3f;
+    --ink: #1f1b16;
+    --gold: #e0a431;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Archivo', sans-serif;
+    line-height: 1.6;
+    /* riso-ish paper grain */
+    background-image: radial-gradient(rgba(31,27,22,0.045) 1px, transparent 1px);
+    background-size: 5px 5px;
+  }
+  .display { font-family: 'Archivo Black', sans-serif; }
+
+  /* ── Sunray hero ───────────────────────────────────── */
+  .hero {
+    position: relative; overflow: hidden;
+    border-bottom: 8px solid var(--ink);
+    text-align: center;
+    padding: 4.5rem 1.5rem 3.5rem;
+  }
+  .hero::before {
+    content: ""; position: absolute; left: 50%; top: 100%;
+    width: 1800px; height: 1800px; transform: translate(-50%, -50%);
+    background: repeating-conic-gradient(from -90deg,
+      rgba(224,164,49,.28) 0deg 6deg, transparent 6deg 16deg);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero .sun {
+    width: 92px; height: 92px; border-radius: 50%;
+    background: var(--gold); border: 5px solid var(--ink);
+    margin: 0 auto 1.6rem; position: relative;
+  }
+  .hero h1 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(2.6rem, 7vw, 4.6rem);
+    line-height: .98; letter-spacing: -0.02em;
+    text-transform: uppercase; position: relative;
+  }
+  .hero h1 .red { color: var(--red); }
+  .hero .sub {
+    position: relative;
+    margin: 1.4rem auto 0; max-width: 46ch;
+    font-size: 1.12rem; font-weight: 500;
+  }
+  .hero .byline {
+    position: relative; display: inline-block; margin-top: 1.8rem;
+    font-family: 'Archivo Black', sans-serif; text-transform: uppercase;
+    letter-spacing: .25em; font-size: .85rem;
+    background: var(--ink); color: var(--cream);
+    padding: .55rem 1.6rem;
+  }
+
+  /* ── Banner nav ────────────────────────────────────── */
+  nav {
+    display: flex; justify-content: center; flex-wrap: wrap;
+    border-bottom: 8px solid var(--ink);
+  }
+  nav a {
+    font-family: 'Archivo Black', sans-serif; text-transform: uppercase;
+    letter-spacing: .12em; font-size: .9rem; text-decoration: none;
+    color: var(--cream); padding: .9rem 2.4rem;
+  }
+  nav a:nth-child(1) { background: var(--red); }
+  nav a:nth-child(2) { background: var(--blue); }
+  nav a:nth-child(3) { background: var(--green); }
+  nav a:hover { filter: brightness(1.12); }
+
+  /* ── Poster grid ───────────────────────────────────── */
+  main { max-width: 980px; margin: 0 auto; padding: 3.5rem 1.5rem 4rem; }
+  .series-label {
+    text-align: center; font-family: 'Archivo Black', sans-serif;
+    text-transform: uppercase; letter-spacing: .3em; font-size: .85rem;
+    margin-bottom: 2.4rem; color: var(--red-deep);
+  }
+  .series-label::before, .series-label::after { content: " ✦ "; color: var(--gold); }
+
+  .posters { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.8rem; }
+  .poster {
+    border: 4px solid var(--ink); background: var(--cream-light);
+    padding: 2rem 1.9rem 1.7rem; position: relative;
+    box-shadow: 8px 8px 0 var(--ink);
+    text-decoration: none; color: var(--ink); display: block;
+    transition: transform .12s;
+  }
+  .poster:hover { transform: translate(-3px, -3px); box-shadow: 11px 11px 0 var(--ink); }
+  .poster .no {
+    font-family: 'Archivo Black', sans-serif; font-size: .8rem;
+    letter-spacing: .2em; text-transform: uppercase;
+    display: inline-block; padding: .25rem .8rem; margin-bottom: 1.1rem;
+    color: var(--cream);
+  }
+  .poster:nth-child(1) .no { background: var(--red); }
+  .poster:nth-child(2) .no { background: var(--blue); }
+  .poster:nth-child(3) .no { background: var(--green); }
+  .poster:nth-child(4) .no { background: var(--gold); color: var(--ink); }
+  .poster h2 {
+    font-family: 'Archivo Black', sans-serif; text-transform: uppercase;
+    font-size: 1.55rem; line-height: 1.08; letter-spacing: -0.01em;
+    margin-bottom: .8rem;
+  }
+  .poster p { font-family: 'Source Serif 4', Georgia, serif; font-size: .98rem; color: #43392c; }
+  .poster .date {
+    margin-top: 1.3rem; font-size: .78rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .15em; color: var(--red-deep);
+    border-top: 2px solid var(--ink); padding-top: .8rem;
+  }
+  .featured-poster { grid-column: 1 / -1; background: var(--red); color: var(--cream); }
+  .featured-poster h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); color: var(--cream); }
+  .featured-poster p { color: #f8e0d4; font-size: 1.08rem; max-width: 60ch; }
+  .featured-poster .no { background: var(--cream) !important; color: var(--red); }
+  .featured-poster .date { color: var(--gold); border-top-color: var(--cream); }
+
+  footer {
+    border-top: 8px solid var(--ink); background: var(--ink); color: var(--cream);
+    text-align: center; padding: 2.2rem 1.5rem;
+  }
+  footer .slogan {
+    font-family: 'Archivo Black', sans-serif; text-transform: uppercase;
+    letter-spacing: .2em; font-size: .95rem;
+  }
+  footer .slogan .star { color: var(--gold); }
+  footer .small { margin-top: .7rem; font-size: .8rem; color: #c9bda6; }
+  @media (max-width: 680px) { .posters { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+  <header class="hero">
+    <div class="sun"></div>
+    <h1>Writing for the<br><span class="red">World We're Owed</span></h1>
+    <p class="sub">Essays on cybernetics, industrial democracy, and machines owned by everyone — from the timeline where the future was kept public.</p>
+    <div class="byline">Shane Carroll</div>
+  </header>
+
+  <nav>
+    <a href="#">Essays</a>
+    <a href="#">Projects</a>
+    <a href="#">About</a>
+  </nav>
+
+  <main>
+    <div class="series-label">The Series So Far</div>
+
+    <div class="posters">
+      <a class="poster featured-poster" href="#">
+        <span class="no">№ 4 · New</span>
+        <h2>AI Belongs to All of Us</h2>
+        <p>Intelligence is becoming infrastructure, and infrastructure has owners. The case for a model commons — argued like the stakes are the whole century, because they are.</p>
+        <div class="date">June 2026 · 12 minute read</div>
+      </a>
+
+      <a class="poster" href="#">
+        <span class="no">№ 3</span>
+        <h2>Feedback Beats Force</h2>
+        <p>Stafford Beer, the algedonic meter, and why every institution that lasts is secretly a thermostat.</p>
+        <div class="date">May 2026 · 9 min</div>
+      </a>
+
+      <a class="poster" href="#">
+        <span class="no">№ 2</span>
+        <h2>Rest Is a Right</h2>
+        <p>The nineteen-hour workweek isn't a fantasy; it's an accounting decision. On who pocketed the productivity.</p>
+        <div class="date">April 2026 · 8 min</div>
+      </a>
+
+      <a class="poster" href="#">
+        <span class="no">№ 1</span>
+        <h2>The Floor Is High</h2>
+        <p>Abundance is a coordination problem, not a resource problem. First essay, first principles.</p>
+        <div class="date">March 2026 · 12 min</div>
+      </a>
+
+      <a class="poster" href="#">
+        <span class="no">№ 0</span>
+        <h2>Why This Exists</h2>
+        <p>Hidden work, made public. A short note on sending ideas into the void on purpose.</p>
+        <div class="date">March 2026 · 3 min</div>
+      </a>
+    </div>
+  </main>
+
+  <footer>
+    <div class="slogan"><span class="star">★</span> The future was kept public <span class="star">★</span></div>
+    <div class="small">Shane Carroll · replication encouraged · RSS</div>
+  </footer>
+</body>
+</html>

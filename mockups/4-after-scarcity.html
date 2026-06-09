@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>shane carroll · essays from a slower world</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dawn-top: #fdf8f1;
+    --dawn-bottom: #fbe9d7;
+    --ink: #3a3633;
+    --soft: #8a8178;
+    --gold: #c9a227;
+    --rose: #d8a48f;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: linear-gradient(180deg, var(--dawn-top) 0%, var(--dawn-bottom) 100%);
+    min-height: 100vh;
+    color: var(--ink);
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 300;
+    line-height: 1.75;
+  }
+  .wrap { max-width: 620px; margin: 0 auto; padding: 0 1.6rem; }
+
+  header { padding: 7rem 0 4.5rem; }
+  .name {
+    font-size: 1.5rem; font-weight: 400; letter-spacing: .01em;
+    text-transform: lowercase;
+  }
+  .dots { color: var(--gold); letter-spacing: .6em; margin: 1.1rem 0; font-size: .9rem; }
+  .tagline {
+    font-style: italic; font-size: 1.18rem; color: var(--soft);
+    max-width: 34ch;
+  }
+  nav { margin-top: 2.8rem; display: flex; gap: 2.2rem; }
+  nav a {
+    font-family: 'Inter', sans-serif; font-size: .78rem;
+    letter-spacing: .22em; text-transform: uppercase;
+    color: var(--soft); text-decoration: none;
+    padding-bottom: .3rem; border-bottom: 1px solid transparent;
+  }
+  nav a.active, nav a:hover { color: var(--ink); border-bottom-color: var(--gold); }
+
+  .rule {
+    border: none; height: 1px; max-width: 620px;
+    margin: 0 auto;
+    background: linear-gradient(90deg, transparent, #d9c8b4, transparent);
+  }
+
+  main { padding: 4rem 0 5rem; }
+  .essay {
+    display: block; text-decoration: none; color: inherit;
+    padding: 2.1rem 0;
+  }
+  .essay + .essay { border-top: 1px solid rgba(58,54,51,.09); }
+  .essay h2 {
+    font-size: 1.7rem; font-weight: 400; letter-spacing: -0.01em;
+    line-height: 1.25;
+    transition: color .2s;
+  }
+  .essay:hover h2 { color: #9b7416; }
+  .essay .meta {
+    font-family: 'Inter', sans-serif; font-size: .74rem;
+    letter-spacing: .18em; text-transform: uppercase; color: var(--soft);
+    margin-top: .7rem;
+  }
+  .essay p.excerpt {
+    margin-top: .9rem; color: #5d564f; font-size: 1.04rem;
+    max-width: 56ch;
+  }
+  .featured-mark {
+    font-family: 'Inter', sans-serif; font-size: .7rem; letter-spacing: .25em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: .8rem;
+  }
+
+  /* dawn horizon */
+  .horizon {
+    margin: 3rem auto 0; max-width: 620px; padding: 0 1.6rem;
+    text-align: center; color: var(--rose); font-size: 1rem; letter-spacing: .3em;
+    user-select: none;
+  }
+  footer {
+    padding: 2.5rem 0 4.5rem; text-align: center;
+    font-family: 'Inter', sans-serif; font-size: .75rem;
+    letter-spacing: .15em; text-transform: uppercase; color: var(--soft);
+  }
+  footer .ital { font-family: 'Fraunces', serif; font-style: italic; text-transform: none;
+    letter-spacing: 0; font-size: .95rem; margin-bottom: .8rem; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="name">shane carroll</div>
+      <div class="dots">· · ·</div>
+      <p class="tagline">essays from a slower world — on politics, cybernetics, and what we do once the rent is paid forever.</p>
+      <nav>
+        <a href="#" class="active">essays</a>
+        <a href="#">projects</a>
+        <a href="#">about</a>
+      </nav>
+    </header>
+  </div>
+
+  <hr class="rule">
+
+  <div class="wrap">
+    <main>
+      <a class="essay" href="#">
+        <div class="featured-mark">latest</div>
+        <h2>On Owning the AI Together</h2>
+        <div class="meta">june · 12 min</div>
+        <p class="excerpt">Intelligence is becoming infrastructure, and infrastructure has owners. A long, unhurried argument for a commons of machines — written as if we have time to get this right, because we must make time.</p>
+      </a>
+
+      <a class="essay" href="#">
+        <h2>Feedback Beats Force</h2>
+        <div class="meta">may · 9 min</div>
+        <p class="excerpt">Stafford Beer kept saying it: durable systems are steered, not commanded. On thermostats, governments, and kindness as a control mechanism.</p>
+      </a>
+
+      <a class="essay" href="#">
+        <h2>The Floor Is High</h2>
+        <div class="meta">april · 12 min</div>
+        <p class="excerpt">Post-scarcity was never about infinite stuff. It is about removing the threat. An economics of unconditional comfort.</p>
+      </a>
+
+      <a class="essay" href="#">
+        <h2>Notes Toward Industrial Democracy</h2>
+        <div class="meta">march · 7 min</div>
+        <p class="excerpt">You vote for your mayor and obey your manager. On the workplace as the last divine-right monarchy.</p>
+      </a>
+    </main>
+  </div>
+
+  <div class="horizon">∿ ∿ ∿ ∿ ∿ ∿ ∿</div>
+  <footer>
+    <div class="ital">the work is public now. rest easy.</div>
+    rss · letters welcome · 2026
+  </footer>
+</body>
+</html>
