@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mark proofs — from scratch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,700;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f7f2e4;
+    --ink: #1f2a24;
+    --body: #34392f;
+    --green: #1d4d3b;
+    --gold: #dc9a26;
+    --terracotta: #bf4f2c;
+    --hairline: #cfc7ad;
+    --rule: #2a3029;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--paper);
+    background-image: radial-gradient(rgba(31,42,36,.05) 1px, transparent 1px);
+    background-size: 4px 4px;
+    color: var(--body);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.03rem;
+    line-height: 1.65;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 1.7rem; }
+  .double-rule { border-top: 5px solid var(--rule); border-bottom: 1px solid var(--rule); height: 9px; }
+  .dateline {
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: .5rem;
+    font-family: 'IBM Plex Mono', monospace; font-size: .66rem;
+    letter-spacing: .14em; padding: .55rem 0;
+  }
+  .proof {
+    border-bottom: 1px solid var(--rule);
+    padding: 2.6rem 0 2.8rem;
+    display: grid; grid-template-columns: 200px 1fr; gap: 2.4rem;
+  }
+  .proof-label { font-family: 'IBM Plex Mono', monospace; font-size: .68rem; letter-spacing: .24em; color: var(--terracotta); }
+  .proof h2 { font-size: 1.5rem; font-weight: 700; color: var(--ink); margin-top: .5rem; line-height: 1.2; }
+  .encodes { margin-top: .9rem; font-family: 'IBM Plex Mono', monospace; font-size: .66rem; letter-spacing: .1em; line-height: 2.1; color: var(--green); }
+  .sizes { display: flex; align-items: flex-end; gap: 2.6rem; flex-wrap: wrap; }
+  .sizebox { text-align: center; }
+  .sizebox .cap { font-family: 'IBM Plex Mono', monospace; font-size: .6rem; letter-spacing: .18em; color: #97906f; margin-top: .6rem; }
+  .mast-demo {
+    margin-top: 1.8rem; padding: .9rem 1.1rem;
+    border: 1px solid var(--hairline);
+    display: inline-flex; align-items: center; gap: .9rem;
+    background: rgba(255,255,255,.25);
+  }
+  .mast-demo .nm { font-weight: 700; font-size: 1.15rem; color: var(--ink); line-height: 1.1; }
+  .mast-demo .nm span {
+    display: block; font-family: 'IBM Plex Mono', monospace; font-weight: 400;
+    font-size: .55rem; letter-spacing: .2em; color: var(--body); margin-top: .2rem;
+  }
+  .rationale { margin-top: 1.4rem; max-width: 58ch; font-size: .98rem; }
+  .rationale em { color: var(--ink); }
+  @media (max-width: 680px) { .proof { grid-template-columns: 1fr; gap: 1.2rem; } }
+  footer { padding: 2rem 0 3.5rem; font-family: 'IBM Plex Mono', monospace; font-size: .68rem; letter-spacing: .14em; color: #6e6a55; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+
+    <!-- F · THE LOOP STAR: a unicursal star — the star IS one closed circuit -->
+    <symbol id="mark-f" viewBox="0 0 64 64">
+      <path d="M32 8 L16.7 55 L56.7 26 L7.3 26 L47.3 55 L35.8 19.6"
+            fill="none" stroke="#bf4f2c" stroke-width="3.2"
+            stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M33.6 12.6 L39.6 18.4 L31.6 20.6 Z" fill="#bf4f2c"/>
+      <circle cx="32" cy="36" r="3" fill="#dc9a26" stroke="#1f2a24" stroke-width="1.6"/>
+    </symbol>
+
+    <!-- G · THE GALAXY: a spiral — feedback through time, variety converging on a star -->
+    <symbol id="mark-g" viewBox="0 0 64 64">
+      <path d="M60 34 A26 26 0 0 0 8 34 A22 22 0 0 0 52 34 A17 17 0 0 0 18 34 A13 13 0 0 0 44 34 A9 9 0 0 0 26 34"
+            fill="none" stroke="#1d4d3b" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M37.5 56 L29 52.3 L29.4 59.9 Z" fill="#1d4d3b"/>
+      <path d="M35 27.5 C36 32, 37 33, 41.5 34 C37 35, 36 36, 35 40.5 C34 36, 33 35, 28.5 34 C33 33, 34 32, 35 27.5 Z"
+            fill="#bf4f2c" stroke="#1f2a24" stroke-width="1.3" stroke-linejoin="round"/>
+    </symbol>
+
+    <!-- H · THE EXCHANGER: Beer's bowtie — attenuate in, amplify out, close the loop -->
+    <symbol id="mark-h" viewBox="0 0 64 64">
+      <!-- variety in (left fan, thin) -->
+      <g stroke="#1d4d3b" stroke-width="1.5" stroke-linecap="round">
+        <line x1="6" y1="16" x2="27.2" y2="29.8"/>
+        <line x1="6" y1="26" x2="26.8" y2="31"/>
+        <line x1="6" y1="36" x2="26.7" y2="33.2"/>
+        <line x1="6" y1="46" x2="27.4" y2="35.4"/>
+      </g>
+      <!-- action out (right fan, thin gold) -->
+      <g stroke="#dc9a26" stroke-width="1.8" stroke-linecap="round">
+        <line x1="36.8" y1="29.8" x2="58" y2="16"/>
+        <line x1="37.2" y1="31" x2="58" y2="26"/>
+        <line x1="37.3" y1="33.2" x2="58" y2="36"/>
+        <line x1="36.6" y1="35.4" x2="58" y2="46"/>
+      </g>
+      <!-- the regulator at the waist -->
+      <circle cx="32" cy="32.5" r="5.4" fill="#dc9a26" stroke="#1f2a24" stroke-width="1.9"/>
+      <!-- the world closes the loop underneath -->
+      <path d="M57.5 50 C46 60.5, 18 60.5, 6.8 50.5"
+            fill="none" stroke="#bf4f2c" stroke-width="3" stroke-linecap="round"/>
+      <path d="M4.2 54.2 L5.6 45.6 L12.4 51.2 Z" fill="#bf4f2c"/>
+    </symbol>
+
+    <!-- I · THE GARDEN CIRCUIT: a plant whose branches return to its roots -->
+    <symbol id="mark-i" viewBox="0 0 64 64">
+      <!-- trunk -->
+      <path d="M32 57 L32 37" stroke="#1d4d3b" stroke-width="3" stroke-linecap="round" fill="none"/>
+      <!-- left branch loops back to the root -->
+      <path d="M32 37 C29 25, 18 17, 12 24.5 C5.5 32.5, 14.5 49, 28.5 55.5"
+            fill="none" stroke="#1d4d3b" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M33.5 59.5 L25.1 57.5 L29.5 51.2 Z" fill="#1d4d3b"/>
+      <!-- right branch loops back to the root -->
+      <path d="M32 37 C35 25, 46 17, 52 24.5 C58.5 32.5, 49.5 49, 35.5 55.5"
+            fill="none" stroke="#1d4d3b" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M30.5 59.5 L38.9 57.5 L34.5 51.2 Z" fill="#1d4d3b"/>
+      <!-- fruit at the apexes; the bud at the crown -->
+      <circle cx="12.5" cy="23.5" r="4" fill="#dc9a26" stroke="#1f2a24" stroke-width="1.7"/>
+      <circle cx="51.5" cy="23.5" r="4" fill="#f7f2e4" stroke="#1f2a24" stroke-width="1.7"/>
+      <circle cx="32" cy="36" r="3.4" fill="#bf4f2c" stroke="#1f2a24" stroke-width="1.7"/>
+    </symbol>
+
+  </defs>
+</svg>
+
+<div class="double-rule"></div>
+<div class="wrap">
+  <div class="dateline">
+    <span><b>SHANE CARROLL — NOTES &amp; ESSAYS</b></span>
+    <span>MARK PROOFS · FROM SCRATCH · CONCEPTS FIRST</span>
+  </div>
+</div>
+<div class="double-rule"></div>
+
+<div class="wrap">
+
+  <section class="proof">
+    <div>
+      <div class="proof-label">PROOF F</div>
+      <h2>The Loop Star</h2>
+      <div class="encodes">FEEDBACK LOOP ✓✓<br>SPACE COMMUNISM ✓✓<br>ONE CONTINUOUS STROKE ✓✓</div>
+    </div>
+    <div>
+      <div class="sizes">
+        <div class="sizebox"><svg width="120" height="120"><use href="#mark-f"/></svg><div class="cap">DISPLAY</div></div>
+        <div class="sizebox"><svg width="54" height="54"><use href="#mark-f"/></svg><div class="cap">MASTHEAD</div></div>
+        <div class="sizebox"><svg width="22" height="22"><use href="#mark-f"/></svg><div class="cap">FAVICON</div></div>
+      </div>
+      <div class="mast-demo">
+        <svg width="44" height="44"><use href="#mark-f"/></svg>
+        <div class="nm">Shane Carroll<span>NOTES &amp; ESSAYS — PRODUCT, SYSTEMS, AI</span></div>
+      </div>
+      <p class="rationale">A five-pointed star is secretly a circuit: it can be drawn in <em>one continuous closed stroke</em>. So draw it that way — leave the stroke visibly unclosed and put an arrowhead on it. From across the room it's a red star; up close it's a feedback loop that never stops being traced. The politics and the cybernetics are literally the same shape, which is roughly your whole thesis. Gold dot at the center: the commons the loop encloses.</p>
+    </div>
+  </section>
+
+  <section class="proof">
+    <div>
+      <div class="proof-label">PROOF G</div>
+      <h2>The Galaxy</h2>
+      <div class="encodes">RECURSION ✓✓<br>ATTENUATION ✓ (WIDE→FOCUSED)<br>SPACE ✓✓ · LOOP THROUGH TIME ✓</div>
+    </div>
+    <div>
+      <div class="sizes">
+        <div class="sizebox"><svg width="120" height="120"><use href="#mark-g"/></svg><div class="cap">DISPLAY</div></div>
+        <div class="sizebox"><svg width="54" height="54"><use href="#mark-g"/></svg><div class="cap">MASTHEAD</div></div>
+        <div class="sizebox"><svg width="22" height="22"><use href="#mark-g"/></svg><div class="cap">FAVICON</div></div>
+      </div>
+      <div class="mast-demo">
+        <svg width="44" height="44"><use href="#mark-g"/></svg>
+        <div class="nm">Shane Carroll<span>NOTES &amp; ESSAYS — PRODUCT, SYSTEMS, AI</span></div>
+      </div>
+      <p class="rationale">A feedback loop never returns to the same place — each pass through changes the system. That's not a circle; that's a <em>spiral</em>. This one carries the rest of the brief for free: it's self-similar at every scale (recursion), it narrows from wide chaos to a focused center (attenuation), and it's a galaxy with a red star at the heart of it (you know what that is). The arrow marks the direction: inward, toward sense.</p>
+    </div>
+  </section>
+
+  <section class="proof">
+    <div>
+      <div class="proof-label">PROOF H</div>
+      <h2>The Exchanger</h2>
+      <div class="encodes">VARIETY ENGINEERING ✓✓<br>ATTENUATE IN / AMPLIFY OUT ✓✓<br>CLOSED WITH THE WORLD ✓</div>
+    </div>
+    <div>
+      <div class="sizes">
+        <div class="sizebox"><svg width="120" height="120"><use href="#mark-h"/></svg><div class="cap">DISPLAY</div></div>
+        <div class="sizebox"><svg width="54" height="54"><use href="#mark-h"/></svg><div class="cap">MASTHEAD</div></div>
+        <div class="sizebox"><svg width="22" height="22"><use href="#mark-h"/></svg><div class="cap">FAVICON</div></div>
+      </div>
+      <div class="mast-demo">
+        <svg width="44" height="44"><use href="#mark-h"/></svg>
+        <div class="nm">Shane Carroll<span>NOTES &amp; ESSAYS — PRODUCT, SYSTEMS, AI</span></div>
+      </div>
+      <p class="rationale">The attenuator idea, completed instead of repaired. Beer's variety engineering was never just compression — it's a <em>bowtie</em>: the world's variety attenuated into the regulator, and the regulator's response amplified back out (green in, gold out). The single red stroke beneath is the world itself closing the loop — what you do comes back as what you face next. The most technically literate mark on the sheet, and symmetric enough to sit anywhere.</p>
+    </div>
+  </section>
+
+  <section class="proof">
+    <div>
+      <div class="proof-label">PROOF I</div>
+      <h2>The Garden Circuit</h2>
+      <div class="encodes">RECURSION / GROWTH ✓✓<br>FEEDBACK LOOP ✓✓<br>SOLARPUNK ✓✓ · LUXURY = LIFE ✓</div>
+    </div>
+    <div>
+      <div class="sizes">
+        <div class="sizebox"><svg width="120" height="120"><use href="#mark-i"/></svg><div class="cap">DISPLAY</div></div>
+        <div class="sizebox"><svg width="54" height="54"><use href="#mark-i"/></svg><div class="cap">MASTHEAD</div></div>
+        <div class="sizebox"><svg width="22" height="22"><use href="#mark-i"/></svg><div class="cap">FAVICON</div></div>
+      </div>
+      <div class="mast-demo">
+        <svg width="44" height="44"><use href="#mark-i"/></svg>
+        <div class="nm">Shane Carroll<span>NOTES &amp; ESSAYS — PRODUCT, SYSTEMS, AI</span></div>
+      </div>
+      <p class="rationale">A plant whose two branches don't end in air — they arc all the way back down and feed their own roots, arrows pointing home. Growth as a closed loop: what the system produces returns to sustain it. One fruit gold (what you made), one left paper-blank (what the reader brings), a red bud at the crown where the branches split. The warmest and most organic of the four — the one that says the future is a garden, not a server room.</p>
+    </div>
+  </section>
+
+  <footer>
+    PROOFS PRESSED JUNE 2026 · FOUR SHAPES, FOUR ARGUMENTS — PICK THE THESIS
+  </footer>
+</div>
+
+</body>
+</html>
