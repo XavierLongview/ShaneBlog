@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mark proofs — attenuator iterations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,700;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f7f2e4;
+    --ink: #1f2a24;
+    --body: #34392f;
+    --green: #1d4d3b;
+    --gold: #dc9a26;
+    --terracotta: #bf4f2c;
+    --hairline: #cfc7ad;
+    --rule: #2a3029;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--paper);
+    background-image: radial-gradient(rgba(31,42,36,.05) 1px, transparent 1px);
+    background-size: 4px 4px;
+    color: var(--body);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.03rem;
+    line-height: 1.65;
+  }
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 1.7rem; }
+  .double-rule { border-top: 5px solid var(--rule); border-bottom: 1px solid var(--rule); height: 9px; }
+  .dateline {
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: .5rem;
+    font-family: 'IBM Plex Mono', monospace; font-size: .66rem;
+    letter-spacing: .14em; padding: .55rem 0;
+  }
+  .proof {
+    border-bottom: 1px solid var(--rule);
+    padding: 2.6rem 0 2.8rem;
+    display: grid; grid-template-columns: 200px 1fr; gap: 2.4rem;
+  }
+  .proof-label { font-family: 'IBM Plex Mono', monospace; font-size: .68rem; letter-spacing: .24em; color: var(--terracotta); }
+  .proof h2 { font-size: 1.5rem; font-weight: 700; color: var(--ink); margin-top: .5rem; line-height: 1.2; }
+  .encodes { margin-top: .9rem; font-family: 'IBM Plex Mono', monospace; font-size: .66rem; letter-spacing: .1em; line-height: 2.1; color: var(--green); }
+  .sizes { display: flex; align-items: flex-end; gap: 2.6rem; flex-wrap: wrap; }
+  .sizebox { text-align: center; }
+  .sizebox .cap { font-family: 'IBM Plex Mono', monospace; font-size: .6rem; letter-spacing: .18em; color: #97906f; margin-top: .6rem; }
+  .mast-demo {
+    margin-top: 1.8rem; padding: .9rem 1.1rem;
+    border: 1px solid var(--hairline);
+    display: inline-flex; align-items: center; gap: .9rem;
+    background: rgba(255,255,255,.25);
+  }
+  .mast-demo .nm { font-weight: 700; font-size: 1.15rem; color: var(--ink); line-height: 1.1; }
+  .mast-demo .nm span {
+    display: block; font-family: 'IBM Plex Mono', monospace; font-weight: 400;
+    font-size: .55rem; letter-spacing: .2em; color: var(--body); margin-top: .2rem;
+  }
+  .rationale { margin-top: 1.4rem; max-width: 58ch; font-size: .98rem; }
+  .rationale em { color: var(--ink); }
+  @media (max-width: 680px) { .proof { grid-template-columns: 1fr; gap: 1.2rem; } }
+  footer { padding: 2rem 0 3.5rem; font-family: 'IBM Plex Mono', monospace; font-size: .68rem; letter-spacing: .14em; color: #6e6a55; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+
+    <!-- C1 · BLOCK DIAGRAM: orthogonal feedback line, control-theory style -->
+    <symbol id="mark-c1" viewBox="0 0 64 64">
+      <!-- variety: five signals from the left converge on the node -->
+      <g stroke="#1d4d3b" stroke-width="1.5" stroke-linecap="round" fill="none">
+        <line x1="6" y1="8"  x2="33.5" y2="20.5"/>
+        <line x1="6" y1="16" x2="33"   y2="22.5"/>
+        <line x1="6" y1="24" x2="32.5" y2="24"/>
+        <line x1="6" y1="32" x2="33"   y2="25.5"/>
+        <line x1="6" y1="40" x2="33.5" y2="27.5"/>
+      </g>
+      <!-- the regulator -->
+      <circle cx="39" cy="24" r="5.5" fill="#dc9a26" stroke="#1f2a24" stroke-width="1.9"/>
+      <!-- feedback: clean orthogonal return path, rounded corners -->
+      <path d="M44.5 24 L51 24 Q55 24 55 28 L55 49 Q55 53 51 53 L16 53 Q12 53 12 49 L12 36"
+            fill="none" stroke="#bf4f2c" stroke-width="3" stroke-linecap="round"/>
+      <path d="M8 36.5 L12 28.5 L16 36.5 Z" fill="#bf4f2c"/>
+    </symbol>
+
+    <!-- C2 · SMOOTH RETURN: one clean arc over the top -->
+    <symbol id="mark-c2" viewBox="0 0 64 64">
+      <g stroke="#1d4d3b" stroke-width="1.5" stroke-linecap="round" fill="none">
+        <line x1="6" y1="26" x2="33.5" y2="36.5"/>
+        <line x1="6" y1="34" x2="33"   y2="38.5"/>
+        <line x1="6" y1="42" x2="32.5" y2="40"/>
+        <line x1="6" y1="50" x2="33"   y2="42"/>
+        <line x1="6" y1="58" x2="33.5" y2="43.5"/>
+      </g>
+      <circle cx="39" cy="40" r="5.5" fill="#dc9a26" stroke="#1f2a24" stroke-width="1.9"/>
+      <!-- one deliberate arc: out of the node, over the top, back to the source -->
+      <path d="M42.5 35.5 C50 24, 44 9, 28 9 C18 9, 10.5 14, 7.5 20.5"
+            fill="none" stroke="#bf4f2c" stroke-width="3" stroke-linecap="round"/>
+      <path d="M3.5 19 L9.5 12.5 L11.5 21.5 Z" fill="#bf4f2c"/>
+    </symbol>
+
+    <!-- C3 · THE RIM: the loop is the circle itself -->
+    <symbol id="mark-c3" viewBox="0 0 64 64">
+      <!-- return half: thick, carries the output back over the top -->
+      <path d="M56.5 32 A24.5 24.5 0 0 0 7.5 32"
+            fill="none" stroke="#bf4f2c" stroke-width="3"/>
+      <!-- source half: thin, the world the signals come from -->
+      <path d="M7.5 32 A24.5 24.5 0 0 0 56.5 32"
+            fill="none" stroke="#1d4d3b" stroke-width="1.8"/>
+      <!-- flow arrowhead on the return -->
+      <path d="M33.5 3.5 L25 7.5 L33.5 11.5 Z" fill="#bf4f2c"/>
+      <!-- variety: chords from the source rim into the node -->
+      <g stroke="#1d4d3b" stroke-width="1.5" stroke-linecap="round" fill="none">
+        <line x1="10.5" y1="44"   x2="29.5" y2="34.5"/>
+        <line x1="19"   y1="52.5" x2="31"   y2="36.5"/>
+        <line x1="30"   y1="56.4" x2="33.5" y2="38"/>
+        <line x1="41.5" y1="54.5" x2="36.5" y2="38"/>
+        <line x1="51"   y1="47.5" x2="38.5" y2="36"/>
+      </g>
+      <!-- the regulator sits on the rim where source meets return -->
+      <circle cx="34" cy="33" r="5.5" fill="#dc9a26" stroke="#1f2a24" stroke-width="1.9"/>
+      <circle cx="56.5" cy="32" r="2.6" fill="#1f2a24"/>
+      <circle cx="7.5" cy="32" r="2.6" fill="#f7f2e4" stroke="#1f2a24" stroke-width="1.6"/>
+    </symbol>
+
+  </defs>
+</svg>
+
+<div class="double-rule"></div>
+<div class="wrap">
+  <div class="dateline">
+    <span><b>SHANE CARROLL — NOTES &amp; ESSAYS</b></span>
+    <span>MARK PROOFS · THE ATTENUATOR, REVISED</span>
+  </div>
+</div>
+<div class="double-rule"></div>
+
+<div class="wrap">
+
+  <section class="proof">
+    <div>
+      <div class="proof-label">PROOF C1</div>
+      <h2>The Block Diagram</h2>
+      <div class="encodes">FEEDBACK LOOP ✓✓<br>VARIETY ATTENUATION ✓✓<br>READS AS CONTROL THEORY ✓✓</div>
+    </div>
+    <div>
+      <div class="sizes">
+        <div class="sizebox"><svg width="120" height="120"><use href="#mark-c1"/></svg><div class="cap">DISPLAY</div></div>
+        <div class="sizebox"><svg width="54" height="54"><use href="#mark-c1"/></svg><div class="cap">MASTHEAD</div></div>
+        <div class="sizebox"><svg width="22" height="22"><use href="#mark-c1"/></svg><div class="cap">FAVICON</div></div>
+      </div>
+      <div class="mast-demo">
+        <svg width="44" height="44"><use href="#mark-c1"/></svg>
+        <div class="nm">Shane Carroll<span>NOTES &amp; ESSAYS — PRODUCT, SYSTEMS, AI</span></div>
+      </div>
+      <p class="rationale">The return path is now drawn the way an engineer would draw it: out of the regulator, two square corners, back up into the source of the signals. Anyone who has ever seen a control-systems block diagram reads this as <em>feedback</em> in half a second — the orthogonal line is the genre convention. The contrast does the storytelling: the world arrives as five thin scattered lines; the response goes back as one thick deliberate one.</p>
+    </div>
+  </section>
+
+  <section class="proof">
+    <div>
+      <div class="proof-label">PROOF C2</div>
+      <h2>The Clean Arc</h2>
+      <div class="encodes">FEEDBACK LOOP ✓<br>VARIETY ATTENUATION ✓✓<br>SOFTER, MORE ORGANIC ✓</div>
+    </div>
+    <div>
+      <div class="sizes">
+        <div class="sizebox"><svg width="120" height="120"><use href="#mark-c2"/></svg><div class="cap">DISPLAY</div></div>
+        <div class="sizebox"><svg width="54" height="54"><use href="#mark-c2"/></svg><div class="cap">MASTHEAD</div></div>
+        <div class="sizebox"><svg width="22" height="22"><use href="#mark-c2"/></svg><div class="cap">FAVICON</div></div>
+      </div>
+      <div class="mast-demo">
+        <svg width="44" height="44"><use href="#mark-c2"/></svg>
+        <div class="nm">Shane Carroll<span>NOTES &amp; ESSAYS — PRODUCT, SYSTEMS, AI</span></div>
+      </div>
+      <p class="rationale">The old swoop, disciplined: one continuous arc with steady curvature, leaving the node upward and landing the arrowhead exactly at the origin of the fan. No wiggle, no second curve fighting the first. Keeps the warmth of a drawn gesture while the geometry stays legible. The compromise candidate between C1's rigor and the original's looseness.</p>
+    </div>
+  </section>
+
+  <section class="proof">
+    <div>
+      <div class="proof-label">PROOF C3</div>
+      <h2>The Rim</h2>
+      <div class="encodes">FEEDBACK LOOP ✓✓<br>VARIETY ATTENUATION ✓<br>CLOSED WORLD / ONE SYSTEM ✓✓</div>
+    </div>
+    <div>
+      <div class="sizes">
+        <div class="sizebox"><svg width="120" height="120"><use href="#mark-c3"/></svg><div class="cap">DISPLAY</div></div>
+        <div class="sizebox"><svg width="54" height="54"><use href="#mark-c3"/></svg><div class="cap">FAVICON</div></div>
+        <div class="sizebox"><svg width="22" height="22"><use href="#mark-c3"/></svg><div class="cap">FAVICON</div></div>
+      </div>
+      <div class="mast-demo">
+        <svg width="44" height="44"><use href="#mark-c3"/></svg>
+        <div class="nm">Shane Carroll<span>NOTES &amp; ESSAYS — PRODUCT, SYSTEMS, AI</span></div>
+      </div>
+      <p class="rationale">The most radical revision: the loop isn't a line added to the diagram — <em>the loop is the circle itself</em>. The thin green lower rim is the world; chords of variety rise off it into the gold regulator; the thick terracotta upper rim carries the response back around. Everything happens inside one closed system, which is the most cybernetic statement of the three. Bonus: it's a circle, so it sits in a favicon and a social avatar perfectly.</p>
+    </div>
+  </section>
+
+  <footer>
+    PROOFS PRESSED JUNE 2026 · C1 ARROWS, C2 CURVES, C3 WORLDS — SAY WHICH
+  </footer>
+</div>
+
+</body>
+</html>
