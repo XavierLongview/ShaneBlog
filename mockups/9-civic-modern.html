@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shane Carroll · writing on AI, product, and systems</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #faf6ec;
+    --paper-deep: #f3ecd9;
+    --ink: #20302a;
+    --body: #3f4940;
+    --muted: #8a8572;
+    --green: #1d4d3b;
+    --gold: #d99a2f;
+    --terracotta: #c75b39;
+    --sky: #7fa8a0;
+    --hairline: #e0d8c2;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  ::selection { background: #f0dcb3; }
+  body {
+    background: var(--paper);
+    color: var(--body);
+    font-family: 'Newsreader', Georgia, serif;
+    line-height: 1.74;
+    font-size: 1.05rem;
+  }
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 0 1.6rem; }
+
+  /* thin transit band */
+  .band { display: flex; height: 4px; }
+  .band span { flex: 1; }
+  .band span:nth-child(1) { background: var(--green); }
+  .band span:nth-child(2) { background: var(--gold); }
+  .band span:nth-child(3) { background: var(--terracotta); }
+  .band span:nth-child(4) { background: var(--sky); }
+
+  /* ── header ─────────────────────────────── */
+  .topline {
+    font-family: 'IBM Plex Mono', monospace; font-size: .72rem;
+    letter-spacing: .15em; color: var(--muted);
+    padding-top: 2.2rem; display: flex; justify-content: space-between; gap: 1rem;
+  }
+  .topline .sun { color: var(--gold); }
+  header.site { padding: 4.2rem 0 3.4rem; }
+  .name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2.7rem; font-weight: 700; letter-spacing: -0.035em;
+    color: var(--green); line-height: 1.03;
+  }
+  .name .dot { color: var(--gold); }
+  .thesis {
+    margin-top: 1.3rem; font-size: 1.18rem; font-style: italic;
+    color: #5f5b4a; max-width: 47ch;
+  }
+  nav { margin-top: 2.5rem; display: flex; gap: 2.2rem; align-items: center; }
+  nav a {
+    font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: .82rem;
+    letter-spacing: .12em; text-transform: uppercase; text-decoration: none;
+    color: var(--muted);
+    display: flex; align-items: center; gap: .5rem;
+    padding-bottom: .3rem; border-bottom: 2.5px solid transparent;
+  }
+  nav a .stop { width: 10px; height: 10px; border-radius: 50%; border: 2.5px solid var(--green); background: var(--paper); }
+  nav a.active { color: var(--green); border-bottom-color: var(--gold); }
+  nav a.active .stop { background: var(--gold); }
+  nav a:hover { color: var(--ink); }
+  nav a:hover .stop { background: var(--terracotta); }
+
+  .rule { border: none; height: 1px; background: var(--hairline); }
+
+  /* ── index ──────────────────────────────── */
+  main { padding: 3rem 0 4rem; }
+  .idx-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    font-family: 'IBM Plex Mono', monospace; font-size: .7rem;
+    letter-spacing: .22em; color: var(--muted); margin-bottom: 1rem;
+  }
+  .idx-head .count { color: var(--terracotta); }
+  .row {
+    display: grid; grid-template-columns: 2.7rem 1fr auto; gap: 1.2rem;
+    align-items: baseline; text-decoration: none;
+    padding: 1.4rem 0; border-bottom: 1px solid var(--hairline);
+  }
+  .row:last-of-type { border-bottom: none; }
+  .row .num {
+    font-family: 'IBM Plex Mono', monospace; font-size: .78rem; color: var(--gold);
+  }
+  .row h2 {
+    font-family: 'Space Grotesk', sans-serif; font-weight: 600;
+    font-size: 1.24rem; letter-spacing: -0.02em; color: var(--ink);
+    line-height: 1.25; transition: color .15s;
+  }
+  .row:hover h2 { color: var(--terracotta); }
+  .row p { margin-top: .35rem; font-size: .96rem; color: #6f6b5a; max-width: 52ch; }
+  .row .strand {
+    font-family: 'IBM Plex Mono', monospace; font-size: .64rem;
+    letter-spacing: .16em; color: var(--green);
+    border: 1px solid var(--hairline); border-radius: 999px;
+    padding: .12rem .6rem; margin-top: .7rem; display: inline-block;
+    background: var(--paper-deep);
+  }
+  .row .when { font-family: 'IBM Plex Mono', monospace; font-size: .72rem; color: var(--muted); white-space: nowrap; }
+
+  .pagebreak {
+    background: var(--ink); color: #d8d2bd;
+    font-family: 'IBM Plex Mono', monospace; font-size: .7rem;
+    letter-spacing: .25em; text-align: center; padding: .7rem;
+  }
+
+  /* ── article ────────────────────────────── */
+  article.post { padding: 4.2rem 0 3rem; }
+  .post .strand-label {
+    font-family: 'IBM Plex Mono', monospace; font-size: .7rem;
+    letter-spacing: .22em; color: var(--terracotta);
+  }
+  .post h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    margin-top: 1rem; font-size: 2.3rem; font-weight: 700;
+    letter-spacing: -0.03em; color: var(--green); line-height: 1.1;
+  }
+  .post .lede { margin-top: 1.1rem; font-size: 1.22rem; font-style: italic; color: #5f5b4a; max-width: 50ch; }
+  .post .meta {
+    margin-top: 1.4rem; padding: .7rem 0;
+    border-top: 2px solid var(--green); border-bottom: 1px solid var(--hairline);
+    font-family: 'IBM Plex Mono', monospace; font-size: .7rem;
+    letter-spacing: .14em; color: var(--muted);
+    display: flex; gap: 2rem; flex-wrap: wrap;
+  }
+  .post .body { margin-top: 2.5rem; }
+  .post .body p { margin-bottom: 1.45rem; max-width: 62ch; }
+  .post .body strong { color: var(--ink); }
+  .post .body a { color: var(--terracotta); text-decoration-color: var(--gold); }
+  blockquote {
+    margin: 2.2rem 0; padding-left: 1.4rem;
+    border-left: 3px solid var(--gold);
+    font-style: italic; font-size: 1.15rem; color: #59543e; max-width: 50ch;
+  }
+  .figure {
+    margin: 2.2rem 0; border: 1.5px solid var(--green); border-radius: 10px;
+    background: var(--paper-deep); padding: 1.2rem 1.4rem;
+    font-family: 'IBM Plex Mono', monospace; font-size: .82rem;
+    color: var(--green); line-height: 1.9; overflow-x: auto;
+  }
+  .figure .cap { font-size: .66rem; letter-spacing: .16em; color: var(--muted); display: block; margin-top: .6rem; }
+
+  footer { border-top: 1px solid var(--hairline); background: var(--paper-deep); }
+  .foot {
+    max-width: 680px; margin: 0 auto; padding: 2.3rem 1.6rem 3.2rem;
+    display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 1rem;
+  }
+  .foot .motto { font-style: italic; color: #5f5b4a; }
+  .foot .links { font-family: 'IBM Plex Mono', monospace; font-size: .72rem; letter-spacing: .12em; color: var(--muted); }
+  .foot .links a { color: inherit; text-decoration: none; }
+  .foot .links a:hover { color: var(--terracotta); }
+  @media (max-width: 600px) {
+    .row { grid-template-columns: 2.2rem 1fr; }
+    .row .when { display: none; }
+    .name { font-size: 2.1rem; }
+  }
+</style>
+</head>
+<body>
+  <div class="band"><span></span><span></span><span></span><span></span></div>
+
+  <div class="wrap">
+    <div class="topline">
+      <span><span class="sun">☀</span> SHANE CARROLL</span>
+      <span>WRITING IN PUBLIC</span>
+    </div>
+
+    <header class="site">
+      <h1 class="name">Product, systems,<br>and steering<span class="dot">.</span></h1>
+      <p class="thesis">Notes from an AI product manager — the Maker Framework, building Relay, and the systems thinking that runs underneath both. <span class="mono" style="font-size:.76rem; color:#a39d87;">[placeholder — your words go here]</span></p>
+      <nav>
+        <a href="#" class="active"><span class="stop"></span>Writing</a>
+        <a href="#"><span class="stop"></span>Projects</a>
+        <a href="#"><span class="stop"></span>About</a>
+      </nav>
+    </header>
+  </div>
+
+  <hr class="rule">
+
+  <div class="wrap">
+    <main>
+      <div class="idx-head"><span>ALL POSTS</span><span class="count">N = 5</span></div>
+
+      <a class="row" href="#">
+        <span class="num">05</span>
+        <div>
+          <h2>The Maker Framework</h2>
+          <p>Product work when generation is cheap and judgment is the scarce input. [placeholder]</p>
+          <span class="strand">PRACTICE</span>
+        </div>
+        <span class="when">jun 2026</span>
+      </a>
+
+      <a class="row" href="#">
+        <span class="num">04</span>
+        <div>
+          <h2>What Building Relay Taught Me About Feedback</h2>
+          <p>Cybersyn as a design brief: a product whose personality is a control loop. [placeholder]</p>
+          <span class="strand">RELAY</span>
+        </div>
+        <span class="when">may 2026</span>
+      </a>
+
+      <a class="row" href="#">
+        <span class="num">03</span>
+        <div>
+          <h2>Shipping With Agents: A PM's Field Notes</h2>
+          <p>Roadmaps, specs, and review when half the team doesn't sleep. [placeholder]</p>
+          <span class="strand">PRACTICE</span>
+        </div>
+        <span class="when">may 2026</span>
+      </a>
+
+      <a class="row" href="#">
+        <span class="num">02</span>
+        <div>
+          <h2>Feedback Beats Force</h2>
+          <p>Every durable institution is secretly a thermostat. [placeholder]</p>
+          <span class="strand">SYSTEMS</span>
+        </div>
+        <span class="when">apr 2026</span>
+      </a>
+
+      <a class="row" href="#">
+        <span class="num">01</span>
+        <div>
+          <h2>Why Write Into the Void</h2>
+          <p>Hidden work, made public. [placeholder]</p>
+          <span class="strand">META</span>
+        </div>
+        <span class="when">apr 2026</span>
+      </a>
+    </main>
+  </div>
+
+  <div class="pagebreak">▼ SAMPLE POST PAGE ▼</div>
+
+  <div class="wrap">
+    <article class="post">
+      <div class="strand-label">№ 05 · PRACTICE</div>
+      <h1>The Maker Framework</h1>
+      <p class="lede">Product work when generation is cheap and judgment is the scarce input. [placeholder]</p>
+      <div class="meta"><span>2026-06-02</span><span>11 MIN</span><span>SHANE CARROLL</span></div>
+      <div class="body">
+        <p>All body text here is placeholder, written only so you can judge the reading experience — measure, leading, <a href="#">link styling</a>, emphasis. Your prose replaces every word.</p>
+        <p>It runs long enough to show paragraph rhythm. <strong>Bold pulls like this.</strong> Newsreader keeps essay-length reading comfortable; Space Grotesk keeps headlines modern without shouting; the mono is reserved for the site's wayfinding.</p>
+        <div class="figure">
+          MAKE ──▶ JUDGE ──▶ STEER<br>
+          &nbsp;▲&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+          &nbsp;└────────◀───────────┘
+          <span class="cap">FIG. 1 — DIAGRAMS IN DRAFTING GREEN</span>
+        </div>
+        <blockquote>Pull quotes lean on a single gold rule — civic, warm, quiet.</blockquote>
+        <p>A closing placeholder paragraph so the page has weight at the bottom, followed by the footer so you can see how a post ends.</p>
+      </div>
+    </article>
+  </div>
+
+  <footer>
+    <div class="foot">
+      <div class="motto">hidden work, made public.</div>
+      <div class="links"><a href="#">rss</a> · <a href="#">email</a> · <a href="#">github</a> · 2026</div>
+    </div>
+  </footer>
+</body>
+</html>
