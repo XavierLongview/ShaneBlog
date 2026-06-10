@@ -1,0 +1,12 @@
+---
+// Compact nameplate for inner pages — the full sunray hero stays on the wall.
+import Pinwheel from './Pinwheel.astro';
+import { SITE } from '../config';
+import { withBase } from '../lib/url';
+---
+<header class="masthead">
+  <div class="inner">
+    <Pinwheel class="mark" />
+    <a class="home" href={withBase('/')}>{SITE.name}</a>
+  </div>
+</header>

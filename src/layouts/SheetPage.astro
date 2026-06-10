@@ -1,0 +1,20 @@
+---
+// Inner-page layout: compact masthead, banner nav, one pasted sheet, footer.
+import Base from './Base.astro';
+import Masthead from '../components/Masthead.astro';
+import BannerNav from '../components/BannerNav.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  current?: 'essays' | 'projects' | 'about';
+}
+const { title, description, current } = Astro.props;
+---
+<Base title={title} description={description}>
+  <Masthead />
+  <BannerNav current={current} />
+  <slot />
+  <Footer />
+</Base>

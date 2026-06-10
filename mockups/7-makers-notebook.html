@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shane Carroll — a maker's notebook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #fcfaf4;
+    --ink: #26261f;
+    --body: #41413a;
+    --muted: #95907f;
+    --blue: #2b5aa0;        /* drafting blue */
+    --red: #c44536;         /* checker's red, used rarely */
+    --hairline: #e7e2d2;
+    --gridline: rgba(43,90,160,.085);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  ::selection { background: #dce6f4; }
+  body {
+    background: var(--paper);
+    color: var(--body);
+    font-family: 'Source Serif 4', Georgia, serif;
+    line-height: 1.74;
+    font-size: 1.03rem;
+  }
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+  .sheet { max-width: 880px; margin: 0 auto; padding: 0 1.6rem; }
+
+  /* ── title block (engineering drawing style) ── */
+  .titleblock {
+    margin-top: 3rem;
+    border: 1.5px solid var(--ink);
+    background:
+      linear-gradient(var(--gridline) 1px, transparent 1px),
+      linear-gradient(90deg, var(--gridline) 1px, transparent 1px);
+    background-size: 22px 22px;
+    background-color: #fbf8ef;
+  }
+  .tb-top { padding: 2.6rem 2.4rem 2.2rem; }
+  .tb-name {
+    font-size: 2.3rem; font-weight: 600; letter-spacing: -0.015em;
+    color: var(--ink); line-height: 1.1;
+  }
+  .tb-sub { margin-top: .9rem; font-style: italic; font-size: 1.13rem; color: #5e5b4e; max-width: 52ch; }
+  .tb-grid {
+    display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
+    border-top: 1.5px solid var(--ink);
+  }
+  .tb-cell {
+    padding: .7rem 1rem .8rem;
+    border-right: 1px solid var(--hairline);
+  }
+  .tb-cell:last-child { border-right: none; }
+  .tb-cell .k {
+    font-family: 'IBM Plex Mono', monospace; font-size: .62rem;
+    letter-spacing: .18em; color: var(--muted); display: block;
+  }
+  .tb-cell .v { font-family: 'IBM Plex Mono', monospace; font-size: .82rem; color: var(--blue); margin-top: .2rem; display: block; }
+
+  nav { margin-top: 1.6rem; display: flex; gap: 2.2rem; padding-left: .2rem; }
+  nav a {
+    font-family: 'IBM Plex Mono', monospace; font-size: .76rem;
+    letter-spacing: .16em; color: var(--muted); text-decoration: none;
+  }
+  nav a.active { color: var(--blue); border-bottom: 2px solid var(--blue); padding-bottom: .25rem; }
+  nav a:hover { color: var(--ink); }
+
+  /* ── entries with margin annotations ───── */
+  main { padding: 3.4rem 0 4rem; }
+  .entry {
+    display: grid; grid-template-columns: 150px 1fr; gap: 2.2rem;
+    padding: 1.8rem 0; border-bottom: 1px solid var(--hairline);
+    text-decoration: none;
+  }
+  .entry:last-of-type { border-bottom: none; }
+  .margin {
+    font-family: 'IBM Plex Mono', monospace; font-size: .7rem;
+    color: var(--muted); line-height: 2; text-align: right;
+    padding-top: .3rem;
+  }
+  .margin .fig { color: var(--blue); }
+  .entry h2 { font-size: 1.42rem; font-weight: 600; color: var(--ink); line-height: 1.28; transition: color .15s; }
+  .entry:hover h2 { color: var(--blue); }
+  .entry p { margin-top: .5rem; color: #66635a; max-width: 56ch; }
+  .entry .rev { font-family: 'IBM Plex Mono', monospace; font-size: .68rem; letter-spacing: .12em; color: var(--muted); margin-top: .8rem; }
+  .entry .rev b { color: var(--red); font-weight: 500; }
+
+  .pagebreak {
+    background: var(--ink); color: #d5d0c0;
+    font-family: 'IBM Plex Mono', monospace; font-size: .7rem;
+    letter-spacing: .25em; text-align: center; padding: .7rem;
+  }
+
+  /* ── article: body + live margin notes ──── */
+  article.post { padding: 4.2rem 0 3rem; }
+  .post-head { max-width: 640px; }
+  .post-head .fileno { font-family: 'IBM Plex Mono', monospace; font-size: .7rem; letter-spacing: .2em; color: var(--blue); }
+  .post-head h1 { margin-top: .9rem; font-size: 2.2rem; font-weight: 600; color: var(--ink); line-height: 1.15; letter-spacing: -0.015em; }
+  .post-head .meta { margin-top: 1rem; font-family: 'IBM Plex Mono', monospace; font-size: .72rem; color: var(--muted); letter-spacing: .12em; }
+
+  .post-body { margin-top: 2.6rem; display: grid; grid-template-columns: 1fr 200px; gap: 2.6rem; }
+  .prose p { margin-bottom: 1.45rem; max-width: 60ch; }
+  .prose strong { color: var(--ink); }
+  .note {
+    font-family: 'IBM Plex Mono', monospace; font-size: .72rem;
+    line-height: 1.85; color: #7d7867;
+    border-left: 1px solid var(--hairline); padding-left: 1.1rem;
+  }
+  .note .tag { color: var(--blue); display: block; margin-bottom: .2rem; }
+  .note + .note { margin-top: 2rem; }
+  .diagram {
+    margin: .4rem 0 1.6rem;
+    border: 1px solid var(--hairline); background: #fbf8ef;
+    padding: 1.2rem 1.4rem;
+    font-family: 'IBM Plex Mono', monospace; font-size: .82rem;
+    color: var(--blue); line-height: 1.9; overflow-x: auto;
+  }
+  .diagram .cap { font-size: .66rem; letter-spacing: .16em; color: var(--muted); display: block; margin-top: .6rem; }
+  blockquote {
+    margin: 2rem 0; padding-left: 1.3rem; border-left: 2px solid var(--red);
+    font-style: italic; font-size: 1.12rem; color: #56533f; max-width: 48ch;
+  }
+
+  footer { border-top: 1.5px solid var(--ink); }
+  .foot {
+    padding: 2rem 0 3.5rem;
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    font-family: 'IBM Plex Mono', monospace; font-size: .72rem;
+    letter-spacing: .12em; color: var(--muted);
+  }
+  .foot .stamp { color: var(--red); border: 1.5px solid var(--red); padding: .2rem .7rem; transform: rotate(-2deg); letter-spacing: .2em; }
+  .foot a { color: inherit; text-decoration: none; }
+  .foot a:hover { color: var(--ink); }
+  @media (max-width: 720px) {
+    .entry { grid-template-columns: 1fr; gap: .4rem; }
+    .margin { text-align: left; }
+    .post-body { grid-template-columns: 1fr; }
+    .note { border-left: none; padding-left: 0; }
+    .tb-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="sheet">
+    <div class="titleblock">
+      <div class="tb-top">
+        <h1 class="tb-name">Shane Carroll</h1>
+        <p class="tb-sub">A maker's notebook — AI product management, the systems underneath it, and the politics underneath those. Hidden work, made public.</p>
+      </div>
+      <div class="tb-grid">
+        <div class="tb-cell"><span class="k">ROLE</span><span class="v">AI PM</span></div>
+        <div class="tb-cell"><span class="k">CURRENT BUILD</span><span class="v">RELAY</span></div>
+        <div class="tb-cell"><span class="k">METHOD</span><span class="v">MAKER FRAMEWORK</span></div>
+        <div class="tb-cell"><span class="k">STATUS</span><span class="v">WRITING</span></div>
+      </div>
+    </div>
+
+    <nav>
+      <a href="#" class="active">NOTEBOOK</a>
+      <a href="#">PROJECTS</a>
+      <a href="#">ABOUT</a>
+      <a href="#">RSS</a>
+    </nav>
+
+    <main>
+      <a class="entry" href="#">
+        <div class="margin"><span class="fig">ENTRY 005</span><br>jun 2026<br>11 min</div>
+        <div>
+          <h2>The Maker Framework</h2>
+          <p>Product work when generation is cheap and judgment is the scarce input. The three loops — make, judge, steer — and what each demands of a PM.</p>
+          <div class="rev">REV 2 · <b>UPDATED</b> AFTER FIELD USE</div>
+        </div>
+      </a>
+
+      <a class="entry" href="#">
+        <div class="margin"><span class="fig">ENTRY 004</span><br>may 2026<br>9 min</div>
+        <div>
+          <h2>What Building Relay Taught Me About Feedback</h2>
+          <p>Cybersyn as a design brief. Notes from building a product whose whole personality is a control loop.</p>
+          <div class="rev">REV 1</div>
+        </div>
+      </a>
+
+      <a class="entry" href="#">
+        <div class="margin"><span class="fig">ENTRY 003</span><br>may 2026<br>8 min</div>
+        <div>
+          <h2>Shipping With Agents: A PM's Field Notes</h2>
+          <p>Roadmaps, specs, and review when half the team doesn't sleep.</p>
+          <div class="rev">REV 1</div>
+        </div>
+      </a>
+
+      <a class="entry" href="#">
+        <div class="margin"><span class="fig">ENTRY 002</span><br>apr 2026<br>12 min</div>
+        <div>
+          <h2>Feedback Beats Force</h2>
+          <p>Every durable institution is secretly a thermostat. Regulation as the kinder alternative to command — in orgs and in states.</p>
+          <div class="rev">REV 1</div>
+        </div>
+      </a>
+    </main>
+  </div>
+
+  <div class="pagebreak">▼ SAMPLE POST PAGE ▼</div>
+
+  <div class="sheet">
+    <article class="post">
+      <div class="post-head">
+        <div class="fileno">ENTRY 005 · STRAND: PRACTICE</div>
+        <h1>The Maker Framework</h1>
+        <div class="meta">2026-06-02 · 11 MIN · REV 2</div>
+      </div>
+
+      <div class="post-body">
+        <div class="prose">
+          <p>Most product frameworks assume the scarce thing is engineering time. Pick wisely, sequence ruthlessly, ship what fits. That assumption is quietly dying, and most PM practice hasn't noticed yet.</p>
+          <p>The Maker Framework starts from the opposite premise: <strong>generation is cheap, judgment is scarce.</strong> When a team can produce ten plausible versions of anything by lunch, the job is no longer choosing what to build. It's building the apparatus that decides what's good.</p>
+          <div class="diagram">
+            MAKE ──▶ JUDGE ──▶ STEER<br>
+            &nbsp;▲&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+            &nbsp;└────────◀───────────┘
+            <span class="cap">FIG. 1 — THE LOOP, SKELETON VIEW</span>
+          </div>
+          <blockquote>The PM's artifact used to be the spec. Now it's the evaluation — the encoded taste of the team.</blockquote>
+          <p>This sounds like process talk, but it's really a systems claim. A team with cheap generation and no evaluation loop isn't faster; it's a firehose aimed at a backlog. The loop is the product behind the product.</p>
+        </div>
+
+        <aside>
+          <div class="note"><span class="tag">¶2 — LINEAGE</span>Beer would call the judging layer System 4: the part of the org that looks outward and defines "better." Most AI-era teams are all System 1.</div>
+          <div class="note"><span class="tag">FIG. 1 — CF.</span>Relay's core loop is this diagram with humans on the STEER arrow. Not a coincidence.</div>
+          <div class="note"><span class="tag">REV 2</span>Renamed the third loop from "decide" to "steer" after two sprints of field use.</div>
+        </aside>
+      </div>
+    </article>
+  </div>
+
+  <footer>
+    <div class="sheet foot">
+      <span>SHANE CARROLL · NOTEBOOK · 2026</span>
+      <span class="stamp">WORK IN PUBLIC</span>
+      <span><a href="#">RSS</a> · <a href="#">EMAIL</a> · <a href="#">GITHUB</a></span>
+    </div>
+  </footer>
+
+</body>
+</html>

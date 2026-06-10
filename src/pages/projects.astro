@@ -1,0 +1,34 @@
+---
+import SheetPage from '../layouts/SheetPage.astro';
+import Pinwheel from '../components/Pinwheel.astro';
+import { SITE } from '../config';
+---
+<SheetPage title={`Projects — ${SITE.name}`} current="projects">
+  <article class="sheet">
+    <span class="kick" style="--strand: var(--green)">Public works</span>
+    <h1>Projects</h1>
+    <p class="dek">
+      The portfolio side of the house: what's being built, and why.
+      [placeholder — your words]
+    </p>
+    <div class="meta"><span>Ongoing</span></div>
+    <div class="prose">
+      <h2>Relay</h2>
+      <p>
+        [placeholder — describe Relay here: what it is, the Cybersyn design
+        lineage, where it stands, where it's going.]
+      </p>
+      <h2>The Maker Framework</h2>
+      <p>
+        [placeholder — describe the framework: the make → judge → steer loop,
+        what problem it answers, how it's used in practice.]
+      </p>
+      <h2>This site</h2>
+      <p>
+        [placeholder — a sentence on the site itself as a project: writing in
+        public, posters from the good timeline, code on GitHub.]
+      </p>
+    </div>
+    <div class="endmark"><Pinwheel variant="ink" /></div>
+  </article>
+</SheetPage>

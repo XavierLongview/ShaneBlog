@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shane Carroll — writing on AI, product, and systems</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600&family=Archivo+Black&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #faf6ec;
+    --paper-deep: #f4edda;
+    --ink: #20302a;
+    --body: #3d473f;
+    --muted: #84806e;
+    --green: #1d4d3b;
+    --gold: #e8a13a;
+    --terracotta: #c75b39;
+    --sky: #7fa8a0;
+    --hairline: #ddd5bf;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  ::selection { background: #f3ddb2; }
+  body {
+    background: var(--paper);
+    color: var(--body);
+    font-family: 'Newsreader', Georgia, serif;
+    line-height: 1.72;
+    font-size: 1.05rem;
+  }
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 1.6rem; }
+
+  /* transit band from #1 */
+  .band { display: flex; height: 6px; }
+  .band span { flex: 1; }
+  .band span:nth-child(1) { background: var(--green); }
+  .band span:nth-child(2) { background: var(--gold); }
+  .band span:nth-child(3) { background: var(--terracotta); }
+  .band span:nth-child(4) { background: var(--sky); }
+
+  /* ── hero with rising sun ───────────────── */
+  header.site { text-align: center; padding: 4.2rem 1.6rem 0; position: relative; overflow: hidden; }
+  .sunrise {
+    width: 120px; height: 60px; margin: 0 auto;
+    background: var(--gold);
+    border: 4px solid var(--green);
+    border-bottom: none;
+    border-radius: 120px 120px 0 0;
+    position: relative;
+  }
+  .sunrise::before {
+    content: ""; position: absolute; left: 50%; bottom: 0;
+    width: 560px; height: 280px; transform: translateX(-50%);
+    background: repeating-conic-gradient(from -90deg at 50% 100%,
+      rgba(232,161,58,.30) 0deg 5deg, transparent 5deg 14deg);
+    border-radius: 560px 560px 0 0;
+    z-index: -1;
+  }
+  .horizon-rule { border: none; height: 4px; background: var(--green); max-width: 480px; margin: 0 auto; }
+  header.site h1 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(2.4rem, 6vw, 3.6rem);
+    text-transform: uppercase; letter-spacing: -0.01em;
+    color: var(--green); line-height: 1.0;
+    margin-top: 1.8rem;
+  }
+  header.site h1 .warm { color: var(--terracotta); }
+  .standfirst {
+    margin: 1.3rem auto 0; max-width: 52ch;
+    font-size: 1.18rem; font-style: italic; color: #5d5c4c;
+  }
+  nav { margin-top: 2.4rem; display: flex; justify-content: center; gap: .6rem; flex-wrap: wrap; padding-bottom: 2.8rem; }
+  nav a {
+    font-family: 'Archivo', sans-serif; font-weight: 600; font-size: .8rem;
+    letter-spacing: .14em; text-transform: uppercase; text-decoration: none;
+    color: var(--green); border: 2px solid var(--green);
+    padding: .5rem 1.4rem; border-radius: 999px; background: var(--paper);
+  }
+  nav a.active { background: var(--green); color: var(--paper); }
+  nav a:hover { background: var(--gold); border-color: var(--green); color: var(--ink); }
+
+  /* ── poster index ───────────────────────── */
+  main { padding: 3rem 0 4rem; }
+  .series {
+    text-align: center; font-family: 'IBM Plex Mono', monospace;
+    font-size: .72rem; letter-spacing: .3em; color: var(--terracotta);
+    margin-bottom: 2.4rem;
+  }
+  .series::before, .series::after { content: " ✦ "; color: var(--gold); }
+  .posters { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem; }
+  .poster {
+    border: 2.5px solid var(--green); border-radius: 12px;
+    background: var(--paper-deep);
+    padding: 1.7rem 1.8rem 1.5rem;
+    text-decoration: none; display: block; color: inherit;
+    box-shadow: 6px 6px 0 rgba(29,77,59,.18);
+    transition: transform .12s, box-shadow .12s;
+    position: relative;
+  }
+  .poster:hover { transform: translate(-2px,-2px); box-shadow: 9px 9px 0 rgba(29,77,59,.22); }
+  .poster .chip {
+    font-family: 'IBM Plex Mono', monospace; font-size: .68rem;
+    letter-spacing: .16em; color: var(--paper);
+    display: inline-block; padding: .22rem .75rem; border-radius: 999px;
+    margin-bottom: 1rem;
+  }
+  .poster:nth-child(1) .chip { background: var(--terracotta); }
+  .poster:nth-child(2) .chip { background: var(--green); }
+  .poster:nth-child(3) .chip { background: var(--sky); color: var(--ink); }
+  .poster:nth-child(4) .chip { background: var(--gold); color: var(--ink); }
+  .poster h2 {
+    font-family: 'Archivo', sans-serif; font-weight: 600;
+    font-size: 1.35rem; letter-spacing: -0.02em; color: var(--ink); line-height: 1.2;
+  }
+  .poster p { margin-top: .6rem; font-size: .97rem; color: #6b685a; }
+  .poster .when {
+    margin-top: 1.1rem; padding-top: .8rem; border-top: 1.5px solid var(--hairline);
+    font-family: 'IBM Plex Mono', monospace; font-size: .68rem;
+    letter-spacing: .14em; color: var(--muted);
+  }
+  .poster.lead { grid-column: 1 / -1; background: var(--green); border-color: var(--green); }
+  .poster.lead h2 { color: var(--paper); font-size: clamp(1.6rem, 3.6vw, 2.2rem); font-family: 'Archivo Black', sans-serif; text-transform: uppercase; }
+  .poster.lead p { color: #cfdcc9; font-size: 1.05rem; max-width: 58ch; }
+  .poster.lead .chip { background: var(--gold); color: var(--ink); }
+  .poster.lead .when { color: var(--gold); border-top-color: rgba(250,246,236,.25); }
+
+  .pagebreak {
+    background: var(--ink); color: #d8d2bd;
+    font-family: 'IBM Plex Mono', monospace; font-size: .7rem;
+    letter-spacing: .25em; text-align: center; padding: .7rem;
+  }
+
+  /* ── article ────────────────────────────── */
+  article.post { max-width: 680px; margin: 0 auto; padding: 4.2rem 1.6rem 3rem; }
+  .post .chip {
+    font-family: 'IBM Plex Mono', monospace; font-size: .68rem; letter-spacing: .16em;
+    background: var(--terracotta); color: var(--paper);
+    display: inline-block; padding: .22rem .75rem; border-radius: 999px;
+  }
+  .post h1 {
+    font-family: 'Archivo Black', sans-serif; text-transform: uppercase;
+    margin-top: 1.2rem; font-size: clamp(1.9rem, 5vw, 2.7rem);
+    color: var(--green); line-height: 1.04; letter-spacing: -0.01em;
+  }
+  .post .lede { margin-top: 1.1rem; font-size: 1.2rem; font-style: italic; color: #5d5c4c; }
+  .post .meta {
+    margin-top: 1.3rem; padding: .65rem 0;
+    border-top: 2px solid var(--green); border-bottom: 1px solid var(--hairline);
+    font-family: 'IBM Plex Mono', monospace; font-size: .7rem;
+    letter-spacing: .14em; color: var(--muted); display: flex; gap: 1.8rem; flex-wrap: wrap;
+  }
+  .post .body { margin-top: 2.4rem; }
+  .post .body p { margin-bottom: 1.45rem; }
+  .post .body strong { color: var(--ink); }
+  blockquote {
+    margin: 2.2rem 0; padding: 1.2rem 1.5rem;
+    border-left: 4px solid var(--gold); background: var(--paper-deep);
+    border-radius: 0 10px 10px 0;
+    font-style: italic; font-size: 1.14rem; color: #564f3a;
+  }
+  .figure {
+    margin: 2.2rem 0; border: 2px solid var(--green); border-radius: 10px;
+    background: #f7f1de; padding: 1.2rem 1.4rem;
+    font-family: 'IBM Plex Mono', monospace; font-size: .82rem;
+    color: var(--green); line-height: 1.9; overflow-x: auto;
+  }
+  .figure .cap { font-size: .66rem; letter-spacing: .16em; color: var(--terracotta); display: block; margin-top: .6rem; }
+
+  footer { background: var(--green); color: #e6e0cb; margin-top: 2rem; }
+  .foot {
+    max-width: 860px; margin: 0 auto; padding: 2.2rem 1.6rem;
+    display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 1rem;
+  }
+  .foot .motto { font-style: italic; font-size: 1.05rem; }
+  .foot .links { font-family: 'IBM Plex Mono', monospace; font-size: .72rem; letter-spacing: .14em; color: var(--gold); }
+  .foot .links a { color: inherit; text-decoration: none; }
+  .foot .links a:hover { color: #fff; }
+  @media (max-width: 640px) { .posters { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+  <div class="band"><span></span><span></span><span></span><span></span></div>
+
+  <header class="site">
+    <div class="sunrise"></div>
+    <hr class="horizon-rule">
+    <h1>Shane <span class="warm">Carroll</span></h1>
+    <p class="standfirst">Writing on AI product work, the Maker Framework, and the systems thinking that connects good products to good politics. <span class="mono" style="font-size:.78rem; color:#a09a85;">[placeholder copy — the real words will be yours]</span></p>
+    <nav>
+      <a href="#" class="active">Writing</a>
+      <a href="#">Projects</a>
+      <a href="#">About</a>
+      <a href="#">RSS</a>
+    </nav>
+  </header>
+
+  <div class="wrap">
+    <main>
+      <div class="series">THE SERIES SO FAR</div>
+      <div class="posters">
+        <a class="poster lead" href="#">
+          <span class="chip">№ 05 — NEW</span>
+          <h2>The Maker Framework</h2>
+          <p>Product work when generation is cheap and judgment is the scarce input. Make, judge, steer. [placeholder]</p>
+          <div class="when">JUNE 2026 · 11 MIN · PRACTICE</div>
+        </a>
+        <a class="poster" href="#">
+          <span class="chip">№ 04</span>
+          <h2>What Building Relay Taught Me About Feedback</h2>
+          <p>Cybersyn as a design brief. [placeholder]</p>
+          <div class="when">MAY 2026 · 9 MIN · RELAY</div>
+        </a>
+        <a class="poster" href="#">
+          <span class="chip">№ 03</span>
+          <h2>Shipping With Agents</h2>
+          <p>Roadmaps, specs, and review when half the team doesn't sleep. [placeholder]</p>
+          <div class="when">MAY 2026 · 8 MIN · PRACTICE</div>
+        </a>
+        <a class="poster" href="#">
+          <span class="chip">№ 02</span>
+          <h2>Feedback Beats Force</h2>
+          <p>Every durable institution is secretly a thermostat. [placeholder]</p>
+          <div class="when">APR 2026 · 12 MIN · SYSTEMS</div>
+        </a>
+        <a class="poster" href="#">
+          <span class="chip">№ 01</span>
+          <h2>Why Write Into the Void</h2>
+          <p>Hidden work, made public. [placeholder]</p>
+          <div class="when">APR 2026 · 3 MIN · META</div>
+        </a>
+      </div>
+    </main>
+  </div>
+
+  <div class="pagebreak">▼ SAMPLE POST PAGE ▼</div>
+
+  <article class="post">
+    <span class="chip">№ 05 · PRACTICE</span>
+    <h1>The Maker Framework</h1>
+    <p class="lede">Product work when generation is cheap and judgment is the scarce input. [placeholder]</p>
+    <div class="meta"><span>2026-06-02</span><span>11 MIN</span><span>BY SHANE CARROLL</span></div>
+    <div class="body">
+      <p>All body text here is placeholder, written only so you can judge the reading experience — measure, leading, link styling, emphasis. Your prose replaces every word of it.</p>
+      <p>It runs long enough to show a real paragraph rhythm. <strong>Bold pulls like this</strong>, and the serif (Newsreader) stays comfortable at essay length while the Archivo display keeps headlines confident and modern.</p>
+      <div class="figure">
+        MAKE ──▶ JUDGE ──▶ STEER<br>
+        &nbsp;▲&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+        &nbsp;└────────◀───────────┘
+        <span class="cap">FIG. 1 — DIAGRAMS GET THE DRAFTING TREATMENT</span>
+      </div>
+      <blockquote>Pull quotes sit on gold and parchment — warm, civic, a little proud of themselves.</blockquote>
+      <p>One more paragraph of placeholder so the page bottom has weight, followed by the footer so you can see how a post closes.</p>
+    </div>
+  </article>
+
+  <footer>
+    <div class="foot">
+      <div class="motto">hidden work, made public.</div>
+      <div class="links"><a href="#">RSS</a> · <a href="#">EMAIL</a> · <a href="#">GITHUB</a> · 2026</div>
+    </div>
+  </footer>
+</body>
+</html>

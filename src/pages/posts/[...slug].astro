@@ -1,0 +1,48 @@
+---
+import { render } from 'astro:content';
+import SheetPage from '../../layouts/SheetPage.astro';
+import Pinwheel from '../../components/Pinwheel.astro';
+import { SITE, STRAND_COLORS } from '../../config';
+import { getPosts, isoDate, type Post } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+interface Props {
+  post: Post;
+}
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const strand = post.data.strand.toUpperCase();
+const strandColor = STRAND_COLORS[strand] ?? 'var(--ink)';
+const onGold = strandColor === 'var(--gold)';
+---
+<SheetPage
+  title={`${post.data.title} — ${SITE.name}`}
+  description={post.data.dek}
+  current="essays"
+>
+  <article class="sheet">
+    <span class:list={['kick', { 'on-gold': onGold }]} style={`--strand: ${strandColor}`}>
+      № {post.number} — {strand}
+    </span>
+    <h1>{post.data.title}</h1>
+    <p class="dek">{post.data.dek}</p>
+    <div class="meta">
+      <span>{isoDate(post.data.date)}</span>
+      <span>{post.minutes} min</span>
+      <span>By {SITE.name}</span>
+      {post.data.rev > 1 && <span>Rev {post.data.rev}</span>}
+    </div>
+    <div class="prose">
+      <Content />
+    </div>
+    <div class="endmark"><Pinwheel variant="ink" /></div>
+  </article>
+</SheetPage>

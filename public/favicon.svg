@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <g>
+    <path d="M32 12 A20 20 0 0 1 45.4 17.1" fill="none" stroke="#d5482a" stroke-width="3.6" stroke-linecap="round"/>
+    <path d="M50.6 21.8 L42.7 20.1 L48.1 14.1 Z" fill="#d5482a"/>
+  </g>
+  <g transform="rotate(72 32 32)">
+    <path d="M32 12 A20 20 0 0 1 45.4 17.1" fill="none" stroke="#d5482a" stroke-width="3.6" stroke-linecap="round"/>
+    <path d="M50.6 21.8 L42.7 20.1 L48.1 14.1 Z" fill="#d5482a"/>
+  </g>
+  <g transform="rotate(144 32 32)">
+    <path d="M32 12 A20 20 0 0 1 45.4 17.1" fill="none" stroke="#d5482a" stroke-width="3.6" stroke-linecap="round"/>
+    <path d="M50.6 21.8 L42.7 20.1 L48.1 14.1 Z" fill="#d5482a"/>
+  </g>
+  <g transform="rotate(216 32 32)">
+    <path d="M32 12 A20 20 0 0 1 45.4 17.1" fill="none" stroke="#d5482a" stroke-width="3.6" stroke-linecap="round"/>
+    <path d="M50.6 21.8 L42.7 20.1 L48.1 14.1 Z" fill="#d5482a"/>
+  </g>
+  <g transform="rotate(288 32 32)">
+    <path d="M32 12 A20 20 0 0 1 45.4 17.1" fill="none" stroke="#d5482a" stroke-width="3.6" stroke-linecap="round"/>
+    <path d="M50.6 21.8 L42.7 20.1 L48.1 14.1 Z" fill="#d5482a"/>
+  </g>
+  <circle cx="32" cy="32" r="3.2" fill="#e0a431" stroke="#1f1b16" stroke-width="1.6"/>
+</svg>

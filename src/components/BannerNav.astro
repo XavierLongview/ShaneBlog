@@ -1,0 +1,22 @@
+---
+import { withBase } from '../lib/url';
+
+interface Props {
+  current?: 'essays' | 'projects' | 'about';
+}
+const { current } = Astro.props;
+
+const items = [
+  { label: 'Essays', href: withBase('/'), key: 'essays' },
+  { label: 'Projects', href: withBase('/projects/'), key: 'projects' },
+  { label: 'About', href: withBase('/about/'), key: 'about' },
+  { label: 'RSS', href: withBase('/rss.xml'), key: 'rss' },
+];
+---
+<nav class="banner">
+  {items.map((item) => (
+    <a href={item.href} aria-current={current === item.key ? 'page' : undefined}>
+      {item.label}
+    </a>
+  ))}
+</nav>

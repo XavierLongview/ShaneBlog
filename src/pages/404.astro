@@ -1,0 +1,17 @@
+---
+import SheetPage from '../layouts/SheetPage.astro';
+import Pinwheel from '../components/Pinwheel.astro';
+import { SITE } from '../config';
+import { withBase } from '../lib/url';
+---
+<SheetPage title={`Not found — ${SITE.name}`}>
+  <article class="sheet">
+    <span class="kick" style="--strand: var(--red)">№ 404 — Missing</span>
+    <h1>This poster was <span class="red">never pressed</span></h1>
+    <p class="dek">No page at this address — the loop has a gap in it.</p>
+    <div class="prose">
+      <p>Head back to <a href={withBase('/')}>the wall</a> and pick another one.</p>
+    </div>
+    <div class="endmark"><Pinwheel variant="ink" /></div>
+  </article>
+</SheetPage>

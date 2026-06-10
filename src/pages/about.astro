@@ -1,0 +1,24 @@
+---
+import SheetPage from '../layouts/SheetPage.astro';
+import Pinwheel from '../components/Pinwheel.astro';
+import { SITE } from '../config';
+---
+<SheetPage title={`About — ${SITE.name}`} current="about">
+  <article class="sheet">
+    <span class="kick" style="--strand: var(--red)">The byline</span>
+    <h1>About</h1>
+    <p class="dek">[placeholder — one italic line about who you are]</p>
+    <div class="meta"><span>{SITE.name}</span><span>AI product manager</span></div>
+    <div class="prose">
+      <p>
+        [placeholder — your introduction: the AI PM work, the systems
+        obsession, the politics, what this site is for. Hidden work, made
+        public.]
+      </p>
+      <p>
+        [placeholder — how to reach you, what kind of mail you welcome.]
+      </p>
+    </div>
+    <div class="endmark"><Pinwheel variant="ink" /></div>
+  </article>
+</SheetPage>

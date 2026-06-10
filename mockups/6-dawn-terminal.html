@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>shane carroll · steering systems</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dawn-a: #fdfaf4;
+    --dawn-b: #faeede;
+    --ink: #2c3236;
+    --body: #474d50;
+    --muted: #8e8a82;
+    --coral: #de6a4a;
+    --slate-teal: #3e7e74;
+    --hairline: rgba(44,50,54,.12);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  ::selection { background: #f6ddcf; }
+  body {
+    background: linear-gradient(180deg, var(--dawn-a) 0%, var(--dawn-b) 100%) fixed;
+    color: var(--body);
+    font-family: 'Newsreader', Georgia, serif;
+    line-height: 1.72;
+    font-size: 1.05rem;
+  }
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+  .wrap { max-width: 700px; margin: 0 auto; padding: 0 1.6rem; }
+
+  /* ── prompt line ────────────────────────── */
+  .promptline {
+    font-family: 'IBM Plex Mono', monospace; font-size: .74rem;
+    color: var(--muted); letter-spacing: .05em;
+    padding-top: 2.4rem;
+  }
+  .promptline .path { color: var(--slate-teal); }
+  .cursor {
+    display: inline-block; width: .55em; height: 1em;
+    background: var(--coral); vertical-align: text-bottom;
+    animation: blink 1.3s step-end infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  header.site { padding: 4rem 0 3.2rem; }
+  .name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2.6rem; font-weight: 600; letter-spacing: -0.035em;
+    color: var(--ink); line-height: 1.05;
+  }
+  .name .accent { color: var(--coral); }
+  .thesis {
+    margin-top: 1.3rem; font-size: 1.18rem; font-style: italic;
+    color: #635f57; max-width: 46ch;
+  }
+  nav { margin-top: 2.4rem; display: flex; gap: .55rem; flex-wrap: wrap; }
+  nav a {
+    font-family: 'IBM Plex Mono', monospace; font-size: .76rem;
+    letter-spacing: .08em; text-decoration: none; color: var(--body);
+    border: 1px solid var(--hairline); border-radius: 999px;
+    padding: .38rem 1.05rem; background: rgba(255,255,255,.45);
+  }
+  nav a.active { background: var(--ink); color: var(--dawn-a); border-color: var(--ink); }
+  nav a:hover { border-color: var(--coral); color: var(--coral); }
+  nav a.active:hover { color: var(--dawn-a); }
+
+  /* ── index table ────────────────────────── */
+  main { padding: 1.2rem 0 4rem; }
+  .idx-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    font-family: 'IBM Plex Mono', monospace; font-size: .7rem;
+    letter-spacing: .2em; color: var(--muted);
+    border-bottom: 1px solid var(--hairline); padding-bottom: .8rem;
+  }
+  .row {
+    display: grid; grid-template-columns: 2.6rem 1fr auto; gap: 1.2rem;
+    align-items: baseline;
+    padding: 1.35rem 0; border-bottom: 1px solid var(--hairline);
+    text-decoration: none;
+  }
+  .row .num { font-family: 'IBM Plex Mono', monospace; font-size: .78rem; color: var(--coral); }
+  .row h2 {
+    font-family: 'Space Grotesk', sans-serif; font-size: 1.22rem;
+    font-weight: 500; letter-spacing: -0.02em; color: var(--ink);
+    transition: color .15s;
+  }
+  .row:hover h2 { color: var(--coral); }
+  .row p { font-size: .95rem; color: #76726a; margin-top: .35rem; max-width: 54ch; }
+  .row .when { font-family: 'IBM Plex Mono', monospace; font-size: .72rem; color: var(--muted); white-space: nowrap; }
+
+  .pagebreak {
+    background: var(--ink); color: #d8d3c8;
+    font-family: 'IBM Plex Mono', monospace; font-size: .7rem;
+    letter-spacing: .25em; text-align: center; padding: .7rem;
+  }
+
+  /* ── article ────────────────────────────── */
+  article.post { padding: 4.2rem 0 3rem; }
+  .post .crumb {
+    font-family: 'IBM Plex Mono', monospace; font-size: .72rem;
+    color: var(--muted); letter-spacing: .05em;
+  }
+  .post .crumb .path { color: var(--slate-teal); }
+  .post h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    margin-top: 1.2rem; font-size: 2.3rem; font-weight: 600;
+    letter-spacing: -0.03em; color: var(--ink); line-height: 1.12;
+  }
+  .post .standfirst {
+    margin-top: 1.2rem; font-size: 1.22rem; font-style: italic;
+    color: #635f57; max-width: 50ch;
+  }
+  .post .meta {
+    margin-top: 1.4rem; padding: .7rem 0;
+    border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline);
+    font-family: 'IBM Plex Mono', monospace; font-size: .72rem;
+    color: var(--muted); letter-spacing: .1em;
+    display: flex; gap: 2rem; flex-wrap: wrap;
+  }
+  .post .body { margin-top: 2.4rem; }
+  .post .body p { margin-bottom: 1.45rem; max-width: 64ch; }
+  .post .body strong { color: var(--ink); font-weight: 500; }
+  blockquote {
+    margin: 2.3rem 0; padding: 1.2rem 1.5rem;
+    background: rgba(255,255,255,.5);
+    border-left: 3px solid var(--coral); border-radius: 0 10px 10px 0;
+    font-style: italic; font-size: 1.14rem; color: #565248;
+    max-width: 54ch;
+  }
+  .figure {
+    margin: 2.3rem 0; padding: 1.3rem 1.5rem;
+    border: 1px solid var(--hairline); border-radius: 10px;
+    background: rgba(255,255,255,.4);
+    font-family: 'IBM Plex Mono', monospace; font-size: .82rem;
+    color: var(--slate-teal); line-height: 1.9; overflow-x: auto;
+  }
+  .figure .cap { font-size: .68rem; letter-spacing: .15em; color: var(--muted); display: block; margin-top: .7rem; }
+
+  footer { border-top: 1px solid var(--hairline); }
+  .foot {
+    padding: 2.4rem 0 3rem; text-align: center;
+  }
+  .foot .horizon { color: #dba88c; letter-spacing: .35em; font-size: .95rem; user-select: none; }
+  .foot .sig {
+    margin-top: 1.1rem; font-family: 'IBM Plex Mono', monospace;
+    font-size: .72rem; color: var(--muted); letter-spacing: .14em;
+  }
+  .foot .sig a { color: inherit; text-decoration: none; }
+  .foot .sig a:hover { color: var(--coral); }
+  @media (max-width: 600px) {
+    .row { grid-template-columns: 2rem 1fr; }
+    .row .when { display: none; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="wrap">
+    <div class="promptline"><span class="path">~/shane-carroll</span> $ writing into the open <span class="cursor"></span></div>
+
+    <header class="site">
+      <h1 class="name">Steering is the job<span class="accent">.</span></h1>
+      <p class="thesis">AI product management, the Maker Framework, and systems thinking from someone who believes good machines — and good politics — are both feedback problems.</p>
+      <nav>
+        <a href="#" class="active">writing</a>
+        <a href="#">work — relay & more</a>
+        <a href="#">about</a>
+        <a href="#">rss</a>
+      </nav>
+    </header>
+
+    <main>
+      <div class="idx-head"><span>ALL POSTS</span><span>N = 5</span></div>
+
+      <a class="row" href="#">
+        <span class="num">05</span>
+        <div>
+          <h2>The Maker Framework</h2>
+          <p>Product work when generation is cheap and judgment is the scarce input. Make, judge, steer.</p>
+        </div>
+        <span class="when">jun 2026</span>
+      </a>
+
+      <a class="row" href="#">
+        <span class="num">04</span>
+        <div>
+          <h2>What Building Relay Taught Me About Feedback</h2>
+          <p>Cybersyn as a design brief: building a product whose whole personality is a control loop.</p>
+        </div>
+        <span class="when">may 2026</span>
+      </a>
+
+      <a class="row" href="#">
+        <span class="num">03</span>
+        <div>
+          <h2>Shipping With Agents: A PM's Field Notes</h2>
+          <p>Roadmaps, specs, and review when half the team doesn't sleep.</p>
+        </div>
+        <span class="when">may 2026</span>
+      </a>
+
+      <a class="row" href="#">
+        <span class="num">02</span>
+        <div>
+          <h2>Feedback Beats Force</h2>
+          <p>Every durable institution is secretly a thermostat. Regulation as the kinder alternative to command.</p>
+        </div>
+        <span class="when">apr 2026</span>
+      </a>
+
+      <a class="row" href="#">
+        <span class="num">01</span>
+        <div>
+          <h2>Why Write Into the Void</h2>
+          <p>Hidden work, made public. A short opening note.</p>
+        </div>
+        <span class="when">apr 2026</span>
+      </a>
+    </main>
+  </div>
+
+  <div class="pagebreak">▼ SAMPLE POST PAGE ▼</div>
+
+  <div class="wrap">
+    <article class="post">
+      <div class="crumb"><span class="path">~/writing</span> $ cat 05-maker-framework.md</div>
+      <h1>The Maker Framework</h1>
+      <p class="standfirst">Product work when generation is cheap and judgment is the scarce input.</p>
+      <div class="meta">
+        <span>2026-06-02</span><span>11 MIN</span><span>STRAND: PRACTICE</span>
+      </div>
+      <div class="body">
+        <p>Most product frameworks assume the scarce thing is engineering time. Pick wisely, sequence ruthlessly, ship what fits. That assumption is quietly dying, and most PM practice hasn't noticed yet.</p>
+        <p>The Maker Framework starts from the opposite premise: <strong>generation is cheap, judgment is scarce.</strong> When a team can produce ten plausible versions of anything by lunch, the job is no longer choosing what to build. It's building the apparatus that decides what's good.</p>
+        <div class="figure">
+          MAKE ──▶ JUDGE ──▶ STEER<br>
+          &nbsp;▲&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+          &nbsp;└────────◀───────────┘
+          <span class="cap">FIG. 1 — THE LOOP, REDUCED TO ITS SKELETON</span>
+        </div>
+        <blockquote>The PM's artifact used to be the spec. Now it's the evaluation — the encoded taste of the team.</blockquote>
+        <p>This sounds like process talk, but it's really a systems claim. A team with cheap generation and no evaluation loop isn't faster; it's a firehose aimed at a backlog. The loop is the product behind the product.</p>
+      </div>
+    </article>
+  </div>
+
+  <footer>
+    <div class="wrap foot">
+      <div class="horizon">∿ ∿ ∿ ∿ ∿</div>
+      <div class="sig"><a href="#">rss</a> · <a href="#">email</a> · <a href="#">github</a> · shane carroll · 2026</div>
+    </div>
+  </footer>
+
+</body>
+</html>
