@@ -144,7 +144,12 @@
   }
 
   /* ── post page ─────────────────────────────────────── */
-  article.post { max-width: 720px; margin: 0 auto; padding: 4rem 1.5rem 2.6rem; }
+  /* reading surfaces are smooth: solid cream masks the page grain
+     under body text, while chrome and display type keep the texture */
+  article.post {
+    max-width: 720px; margin: 0 auto; padding: 4rem 1.5rem 2.6rem;
+    background: var(--cream);
+  }
   .post .kick {
     font-family: 'IBM Plex Mono', monospace; font-size: .7rem;
     letter-spacing: .26em; text-transform: uppercase;
