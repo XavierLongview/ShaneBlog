@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shane Carroll — notes &amp; essays</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,700;1,6..72,400;1,6..72,500&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f7f2e4;
+    --ink: #1f2a24;
+    --body: #34392f;
+    --green: #1d4d3b;
+    --gold: #dc9a26;
+    --terracotta: #bf4f2c;
+    --blue: #2742d6;          /* the clash — links and footnotes only */
+    --hairline: #cfc7ad;
+    --rule: #2a3029;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  ::selection { background: #efd9a8; }
+  body {
+    background: var(--paper);
+    background-image:
+      radial-gradient(rgba(31,42,36,.05) 1px, transparent 1px),
+      radial-gradient(ellipse 1200px 500px at 85% -5%, rgba(220,154,38,.10), transparent 60%);
+    background-size: 4px 4px, auto;
+    color: var(--body);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.05rem;
+    line-height: 1.7;
+  }
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 1.7rem; }
+  a { color: inherit; }
+
+  .double-rule { border-top: 5px solid var(--rule); border-bottom: 1px solid var(--rule); height: 9px; }
+  .thin-rule { border: none; border-top: 1px solid var(--rule); }
+
+  /* ── masthead ───────────────────────────── */
+  .masthead-row {
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 1.2rem; padding: 1rem 0;
+  }
+  .mast-left { display: flex; align-items: center; gap: 1rem; }
+  .mark { width: 52px; height: 52px; flex: none; }
+  .site-name {
+    font-family: 'Newsreader', serif; font-weight: 700;
+    font-size: 1.35rem; letter-spacing: .01em; color: var(--ink);
+    line-height: 1.15;
+  }
+  .site-name .sub {
+    display: block; font-family: 'IBM Plex Mono', monospace; font-weight: 400;
+    font-size: .64rem; letter-spacing: .22em; color: var(--body); margin-top: .25rem;
+  }
+  nav {
+    font-family: 'IBM Plex Mono', monospace; font-size: .76rem;
+    letter-spacing: .1em; display: flex; gap: .4rem; flex-wrap: wrap; align-items: baseline;
+  }
+  nav a { text-decoration: none; padding: .15rem .1rem; }
+  nav a.active { background: var(--ink); color: var(--paper); padding: .15rem .55rem; }
+  nav a:not(.active):hover { color: var(--blue); text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 4px; }
+  nav .sep { color: var(--hairline); }
+
+  .dateline {
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: .5rem;
+    font-family: 'IBM Plex Mono', monospace; font-size: .66rem;
+    letter-spacing: .12em; color: var(--body);
+    padding: .5rem 0;
+  }
+
+  /* ── front page ─────────────────────────── */
+  main { padding: 2.8rem 0 4rem; }
+  .lead { display: block; text-decoration: none; position: relative; padding-bottom: 2.6rem; }
+  .lead .kick {
+    font-family: 'IBM Plex Mono', monospace; font-size: .68rem;
+    letter-spacing: .26em; color: var(--terracotta);
+  }
+  .lead h2 {
+    font-family: 'Archivo Black', sans-serif; text-transform: uppercase;
+    margin-top: .8rem;
+    font-size: clamp(2.4rem, 7.5vw, 4.6rem); line-height: .94; letter-spacing: -0.02em;
+    color: var(--green); max-width: 16ch;
+    text-shadow: 3px 3px 0 rgba(191,79,44,.5);
+  }
+  .lead:hover h2 { color: var(--ink); }
+  .lead .dek { margin-top: 1.2rem; font-size: 1.2rem; font-style: italic; max-width: 50ch; }
+  .lead .dek .note { font-family: 'IBM Plex Mono', monospace; font-size: .66rem; color: #97906f; letter-spacing: .06em; }
+  .lead .meta { margin-top: 1.1rem; font-family: 'IBM Plex Mono', monospace; font-size: .68rem; letter-spacing: .14em; color: var(--body); }
+  .stamp {
+    position: absolute; right: 0; top: 0;
+    font-family: 'IBM Plex Mono', monospace; font-size: .66rem; letter-spacing: .28em;
+    color: var(--terracotta); border: 2px solid var(--terracotta);
+    padding: .3rem .8rem; transform: rotate(3deg);
+    mask-image: radial-gradient(rgba(0,0,0,.92) 60%, rgba(0,0,0,.55));
+  }
+  @media (max-width: 700px) { .stamp { position: static; display: inline-block; margin-bottom: 1rem; } }
+
+  /* ── ledger ─────────────────────────────── */
+  .idx-label {
+    font-family: 'IBM Plex Mono', monospace; font-size: .68rem;
+    letter-spacing: .3em; color: var(--body);
+    display: flex; align-items: center; gap: 1rem;
+    padding-bottom: .8rem;
+  }
+  .idx-label::after { content: ""; flex: 1; border-top: 1px solid var(--rule); }
+  .ledger { border-top: 5px solid var(--rule); }
+  .lrow {
+    display: grid; grid-template-columns: 3.4rem 1fr auto; gap: 1.3rem;
+    align-items: baseline; padding: 1.15rem 0;
+    border-bottom: 1px solid var(--hairline);
+    text-decoration: none;
+  }
+  .lrow .n { font-family: 'Archivo Black', sans-serif; font-size: 1.35rem; color: var(--gold); }
+  .lrow h3 { font-family: 'Newsreader', serif; font-weight: 700; font-size: 1.28rem; line-height: 1.3; color: var(--ink); display: inline; }
+  .lrow:hover h3 { background: var(--gold); }
+  .lrow .dek-inline { font-style: italic; color: #5a5a48; font-size: 1.02rem; }
+  .lrow .tag { font-family: 'IBM Plex Mono', monospace; font-size: .62rem; letter-spacing: .18em; color: var(--blue); margin-left: .6rem; }
+  .lrow .when { font-family: 'IBM Plex Mono', monospace; font-size: .7rem; color: var(--body); white-space: nowrap; }
+  @media (max-width: 620px) { .lrow { grid-template-columns: 2.4rem 1fr; } .lrow .when { display: none; } }
+
+  .pagebreak {
+    background: var(--ink); color: #cfc7ad;
+    font-family: 'IBM Plex Mono', monospace; font-size: .68rem;
+    letter-spacing: .3em; text-align: center; padding: .65rem;
+  }
+
+  /* ── article ────────────────────────────── */
+  article.post { max-width: 720px; margin: 0 auto; padding: 4rem 1.7rem 2.6rem; }
+  .post .kick { font-family: 'IBM Plex Mono', monospace; font-size: .68rem; letter-spacing: .26em; color: var(--terracotta); }
+  .post h1 {
+    font-family: 'Archivo Black', sans-serif; text-transform: uppercase;
+    margin-top: .9rem; font-size: clamp(2rem, 5.6vw, 3.1rem);
+    color: var(--green); line-height: .98; letter-spacing: -0.015em;
+    text-shadow: 2px 2px 0 rgba(191,79,44,.45);
+  }
+  .post .dek { margin-top: 1.1rem; font-size: 1.22rem; font-style: italic; max-width: 50ch; }
+  .post .meta {
+    margin-top: 1.4rem;
+    border-top: 4px solid var(--rule); border-bottom: 1px solid var(--rule);
+    padding: .5rem 0;
+    font-family: 'IBM Plex Mono', monospace; font-size: .68rem;
+    letter-spacing: .14em; display: flex; gap: 1.8rem; flex-wrap: wrap;
+  }
+  .post .body { margin-top: 2.3rem; }
+  .post .body > p { margin-bottom: 1.4rem; max-width: 62ch; }
+  .post .body strong { color: var(--ink); }
+  .post .body a { color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  .post .body p:first-child::first-letter {
+    font-family: 'Archivo Black', sans-serif;
+    float: left; font-size: 3.6rem; line-height: .78;
+    padding: .1em .12em 0 0; color: var(--terracotta);
+  }
+  sup { font-family: 'IBM Plex Mono', monospace; font-size: .65em; color: var(--blue); }
+  blockquote {
+    margin: 2.1rem 0 2.1rem -1.2rem; padding: .2rem 0 .2rem 1.2rem;
+    border-left: 6px double var(--green);
+    font-size: 1.3rem; line-height: 1.45; font-style: italic; color: #46432f;
+    max-width: 44ch;
+  }
+  .figure {
+    margin: 2.2rem 0; border: 1px solid var(--rule);
+    padding: 1.2rem 1.4rem;
+    font-family: 'IBM Plex Mono', monospace; font-size: .82rem;
+    color: var(--green); line-height: 1.9; overflow-x: auto;
+    transform: rotate(-.35deg);
+    background: rgba(255,255,255,.25);
+  }
+  .figure .cap { font-size: .64rem; letter-spacing: .18em; color: var(--body); display: block; margin-top: .7rem; }
+  .endmark { margin-top: 2.4rem; }
+  .endmark svg { width: 26px; height: 26px; }
+  .footnotes { margin-top: 2.6rem; padding-top: 1rem; border-top: 1px solid var(--rule); max-width: 54ch; }
+  .footnotes p { font-size: .88rem; color: #5a5a48; line-height: 1.6; }
+  .footnotes .fn { font-family: 'IBM Plex Mono', monospace; color: var(--blue); font-size: .75rem; }
+
+  /* ── colophon ───────────────────────────── */
+  footer { margin-top: 2rem; }
+  .colophon {
+    max-width: 880px; margin: 0 auto; padding: 1.6rem 1.7rem 3.4rem;
+    display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2.4rem;
+  }
+  .colophon h4 {
+    font-family: 'IBM Plex Mono', monospace; font-size: .64rem;
+    letter-spacing: .26em; color: var(--terracotta); margin-bottom: .7rem; font-weight: 500;
+  }
+  .colophon p, .colophon li { font-size: .85rem; line-height: 1.65; color: #50503e; }
+  .colophon ul { list-style: none; }
+  .colophon a { text-decoration: none; }
+  .colophon a:hover { color: var(--blue); text-decoration: underline; }
+  @media (max-width: 640px) {
+    .colophon { grid-template-columns: 1fr; gap: 1.6rem; }
+    .masthead-row { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- THE MARK · five arrows chasing each other make the star -->
+    <g id="pw-arrow">
+      <path d="M32 12 A20 20 0 0 1 45.4 17.1" fill="none" stroke="#bf4f2c" stroke-width="3.6" stroke-linecap="round"/>
+      <path d="M50.6 21.8 L42.7 20.1 L48.1 14.1 Z" fill="#bf4f2c"/>
+    </g>
+    <symbol id="pinwheel" viewBox="0 0 64 64">
+      <use href="#pw-arrow"/>
+      <use href="#pw-arrow" transform="rotate(72 32 32)"/>
+      <use href="#pw-arrow" transform="rotate(144 32 32)"/>
+      <use href="#pw-arrow" transform="rotate(216 32 32)"/>
+      <use href="#pw-arrow" transform="rotate(288 32 32)"/>
+      <circle cx="32" cy="32" r="3.2" fill="#dc9a26" stroke="#1f2a24" stroke-width="1.6"/>
+    </symbol>
+    <!-- ink variant for the end-of-post mark -->
+    <g id="pw-arrow-ink">
+      <path d="M32 12 A20 20 0 0 1 45.4 17.1" fill="none" stroke="#2a3029" stroke-width="3.6" stroke-linecap="round"/>
+      <path d="M50.6 21.8 L42.7 20.1 L48.1 14.1 Z" fill="#2a3029"/>
+    </g>
+    <symbol id="pinwheel-ink" viewBox="0 0 64 64">
+      <use href="#pw-arrow-ink"/>
+      <use href="#pw-arrow-ink" transform="rotate(72 32 32)"/>
+      <use href="#pw-arrow-ink" transform="rotate(144 32 32)"/>
+      <use href="#pw-arrow-ink" transform="rotate(216 32 32)"/>
+      <use href="#pw-arrow-ink" transform="rotate(288 32 32)"/>
+      <circle cx="32" cy="32" r="3.2" fill="#dc9a26" stroke="#1f2a24" stroke-width="1.6"/>
+    </symbol>
+  </defs>
+</svg>
+
+  <div class="double-rule"></div>
+
+  <div class="wrap">
+    <div class="masthead-row">
+      <div class="mast-left">
+        <svg class="mark"><use href="#pinwheel"/></svg>
+        <div class="site-name">
+          Shane Carroll
+          <span class="sub">NOTES &amp; ESSAYS — PRODUCT, SYSTEMS, AI</span>
+        </div>
+      </div>
+      <nav>
+        <a href="#" class="active">WRITING</a> <span class="sep">/</span>
+        <a href="#">PROJECTS</a> <span class="sep">/</span>
+        <a href="#">ABOUT</a> <span class="sep">/</span>
+        <a href="#">RSS</a>
+      </nav>
+    </div>
+  </div>
+
+  <hr class="thin-rule">
+  <div class="wrap">
+    <div class="dateline">
+      <span>ROLLING ISSUE — REVISED IN PUBLIC</span>
+      <span>LAST PRESSED JUNE 2026</span>
+    </div>
+  </div>
+  <div class="double-rule"></div>
+
+  <div class="wrap">
+    <main>
+      <a class="lead" href="#">
+        <span class="stamp">FRESH INK</span>
+        <div class="kick">№ 05 — PRACTICE — JUNE 2026</div>
+        <h2>The Maker Framework</h2>
+        <p class="dek">Product work when generation is cheap and judgment is the scarce input. <span class="note">[dek placeholder — your words]</span></p>
+        <div class="meta">11 MIN · BY SHANE CARROLL</div>
+      </a>
+
+      <div class="idx-label">PREVIOUSLY</div>
+      <div class="ledger">
+        <a class="lrow" href="#">
+          <span class="n">04</span>
+          <div>
+            <h3>What Building Relay Taught Me About Feedback</h3>
+            <span class="dek-inline"> — Cybersyn as a design brief. [placeholder]</span>
+            <span class="tag">RELAY</span>
+          </div>
+          <span class="when">MAY 2026</span>
+        </a>
+        <a class="lrow" href="#">
+          <span class="n">03</span>
+          <div>
+            <h3>Shipping With Agents: A PM&rsquo;s Field Notes</h3>
+            <span class="dek-inline"> — when half the team doesn&rsquo;t sleep. [placeholder]</span>
+            <span class="tag">PRACTICE</span>
+          </div>
+          <span class="when">MAY 2026</span>
+        </a>
+        <a class="lrow" href="#">
+          <span class="n">02</span>
+          <div>
+            <h3>Feedback Beats Force</h3>
+            <span class="dek-inline"> — every durable institution is secretly a thermostat. [placeholder]</span>
+            <span class="tag">SYSTEMS</span>
+          </div>
+          <span class="when">APR 2026</span>
+        </a>
+        <a class="lrow" href="#">
+          <span class="n">01</span>
+          <div>
+            <h3>Why Write Into the Void</h3>
+            <span class="dek-inline"> — hidden work, made public. [placeholder]</span>
+            <span class="tag">META</span>
+          </div>
+          <span class="when">APR 2026</span>
+        </a>
+      </div>
+    </main>
+  </div>
+
+  <div class="pagebreak">SAMPLE POST PAGE FOLLOWS</div>
+
+  <article class="post">
+    <div class="kick">№ 05 — PRACTICE</div>
+    <h1>The Maker Framework</h1>
+    <p class="dek">Product work when generation is cheap and judgment is the scarce input. [placeholder]</p>
+    <div class="meta"><span>2026-06-02</span><span>11 MIN</span><span>REV 1</span></div>
+    <div class="body">
+      <p>Placeholder body copy, present only so you can judge the reading surface: measure, leading, <a href="#">link color</a> (the one clashing workwear blue<sup>1</sup>), emphasis, and how the drop cap behaves at essay length.</p>
+      <p>The pinwheel in the masthead is the site&rsquo;s thesis in miniature: <strong>no single line draws the star</strong> — five arrows chasing each other in a loop produce it, and it exists only while the loop keeps turning.</p>
+      <div class="figure">
+        MAKE ──▶ JUDGE ──▶ STEER<br>
+        &nbsp;▲&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+        &nbsp;└────────◀───────────┘
+        <span class="cap">FIG. 1 — DIAGRAMS SIT A HALF-DEGREE OFF SQUARE, LIKE A TAPED-IN CLIPPING</span>
+      </div>
+      <blockquote>Pull quotes hang into the margin on a double rule — print furniture, not a UI component.</blockquote>
+      <p>Posts close with the mark instead of a horizontal rule — the loop, again, where the writing hands off to the reader.</p>
+      <div class="endmark"><svg><use href="#pinwheel-ink"/></svg></div>
+      <div class="footnotes">
+        <p><span class="fn">1.</span> Eclectic palettes keep one color that doesn&rsquo;t belong. The blue is reserved for links and footnote markers — nothing else gets it.</p>
+      </div>
+    </div>
+  </article>
+
+  <div class="double-rule"></div>
+  <footer>
+    <div class="colophon">
+      <div>
+        <h4>COLOPHON</h4>
+        <p>Set in Archivo Black, Newsreader, and IBM Plex Mono on unbleached paper (#f7f2e4). The mark is five arrows in a shared loop — no single line draws the star; it appears between them and lasts only while the loop turns. Design and code: a human steering a machine. The words: human only. No tracking, no comments, no algorithm — just RSS and a URL.</p>
+      </div>
+      <div>
+        <h4>ELSEWHERE</h4>
+        <ul>
+          <li><a href="#">RSS feed</a></li>
+          <li><a href="#">Email</a></li>
+          <li><a href="#">GitHub</a></li>
+          <li><a href="#">Relay</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>STATUS</h4>
+        <p>Rolling issue, revised in public. Last pressed June 2026.</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
