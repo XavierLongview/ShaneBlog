@@ -1,0 +1,61 @@
+---
+import Base from '../layouts/Base.astro';
+import Pinwheel from '../components/Pinwheel.astro';
+import BannerNav from '../components/BannerNav.astro';
+import Footer from '../components/Footer.astro';
+import { SITE, STRAND_COLORS } from '../config';
+import { getPosts, monthYear } from '../lib/posts';
+import { withBase } from '../lib/url';
+
+const posts = await getPosts();
+const [featured, ...rest] = posts;
+
+function strandColor(strand: string) {
+  return STRAND_COLORS[strand.toUpperCase()] ?? 'var(--ink)';
+}
+function onGold(strand: string) {
+  return STRAND_COLORS[strand.toUpperCase()] === 'var(--gold)';
+}
+---
+<Base>
+  <header class="hero">
+    <Pinwheel class="mark" />
+    <h1>{SITE.headline[0]}<br /><span class="red">{SITE.headline[1]}</span></h1>
+    <p class="sub">{SITE.standfirst}</p>
+    <div class="byline">{SITE.name}</div>
+  </header>
+
+  <BannerNav current="essays" />
+
+  <main class="wall">
+    <div class="series-label">The series — <b>ongoing</b></div>
+
+    <div class="posters">
+      {featured && (
+        <a class="poster featured" href={withBase(`/posts/${featured.id}/`)}>
+          <span class="stamp">FRESH INK</span>
+          <span class="no">№ {featured.number} — {featured.data.strand}</span>
+          <h2>{featured.data.title}</h2>
+          <p>{featured.data.dek}</p>
+          <div class="date">{monthYear(featured.data.date)} · {featured.minutes} minute read</div>
+        </a>
+      )}
+
+      {rest.map((post) => (
+        <a class="poster" href={withBase(`/posts/${post.id}/`)}>
+          <span
+            class:list={['no', { 'on-gold': onGold(post.data.strand) }]}
+            style={`--strand: ${strandColor(post.data.strand)}`}
+          >
+            № {post.number} — {post.data.strand}
+          </span>
+          <h2>{post.data.title}</h2>
+          <p>{post.data.dek}</p>
+          <div class="date">{monthYear(post.data.date)} · {post.minutes} min</div>
+        </a>
+      ))}
+    </div>
+  </main>
+
+  <Footer />
+</Base>

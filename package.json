@@ -1,0 +1,20 @@
+{
+  "name": "shaneblog",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/rss": "^4.0.12",
+    "@astrojs/sitemap": "^3.4.1",
+    "@fontsource/archivo": "^5.2.5",
+    "@fontsource/archivo-black": "^5.2.5",
+    "@fontsource/ibm-plex-mono": "^5.2.5",
+    "@fontsource/source-serif-4": "^5.2.5",
+    "astro": "^5.12.0"
+  }
+}

@@ -1,0 +1,26 @@
+---
+// The mark: five arrows chasing each other make the star.
+// No single line draws it; it exists only while the loop turns.
+interface Props {
+  variant?: 'red' | 'ink' | 'cream';
+  class?: string;
+}
+const { variant = 'red', class: className } = Astro.props;
+const stroke = { red: '#d5482a', ink: '#1f1b16', cream: '#f3e3bc' }[variant];
+const rotations = [0, 72, 144, 216, 288];
+---
+<svg viewBox="0 0 64 64" class={className} aria-hidden="true">
+  {rotations.map((deg) => (
+    <g transform={`rotate(${deg} 32 32)`}>
+      <path
+        d="M32 12 A20 20 0 0 1 45.4 17.1"
+        fill="none"
+        stroke={stroke}
+        stroke-width="3.6"
+        stroke-linecap="round"
+      />
+      <path d="M50.6 21.8 L42.7 20.1 L48.1 14.1 Z" fill={stroke} />
+    </g>
+  ))}
+  <circle cx="32" cy="32" r="3.2" fill="#e0a431" stroke="#1f1b16" stroke-width="1.6" />
+</svg>

@@ -1,0 +1,54 @@
+---
+import '@fontsource/archivo-black';
+import '@fontsource/archivo/400.css';
+import '@fontsource/archivo/500.css';
+import '@fontsource/archivo/700.css';
+import '@fontsource/source-serif-4/400.css';
+import '@fontsource/source-serif-4/600.css';
+import '@fontsource/source-serif-4/400-italic.css';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
+import '../styles/global.css';
+import { SITE } from '../config';
+import { withBase } from '../lib/url';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const { title = SITE.title, description = SITE.standfirst } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={SITE.name}
+      href={withBase('/rss.xml')}
+    />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta name="generator" content={Astro.generator} />
+    {SITE.goatcounter && (
+      <script
+        is:inline
+        async
+        src="https://gc.zgo.at/count.js"
+        data-goatcounter={`https://${SITE.goatcounter}.goatcounter.com/count`}
+      ></script>
+    )}
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
