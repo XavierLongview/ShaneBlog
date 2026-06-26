@@ -2,20 +2,14 @@
 
 export const SITE = {
   name: 'Shane Carroll',
-  title: "Shane Carroll — Writing for the World We're Owed",
+  title: "Shane Carroll — Product, Systems, and AI",
   // The hero headline, split across two lines; the second line prints red.
-  headline: ["Writing for the", "World We're Owed"],
+  headline: ["A Million Monkeys Typing", "A Million Hampsters Running"],
   // [placeholder] — your words. Shown under the headline on the front page
   // and used as the site description for SEO/RSS.
   standfirst:
-    'Essays on AI product work, the Maker Framework, building Relay — and the systems thinking that connects good machines to good politics.',
-  slogan: 'The future was kept public',
+    'Personal thoughts on product development in the age of automated intelligence; tenuous scribbles desperately shouted into the void. ',
   email: 'scarroll825@gmail.com',
-  github: 'https://github.com/XavierLongview',
-  relay: '#', // link to Relay when it has a home
-  // GoatCounter site code (the "xyz" in https://xyz.goatcounter.com).
-  // Leave empty to ship zero analytics. Create a free account at
-  // https://www.goatcounter.com, pick a code, and paste it here.
   goatcounter: '',
 };
 
