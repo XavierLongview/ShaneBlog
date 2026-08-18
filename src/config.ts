@@ -10,6 +10,11 @@ export const SITE = {
   standfirst:
     'Personal thoughts on product development in the age of automated intelligence; tenuous scribbles desperately shouted into the void. ',
   email: 'scarroll825@gmail.com',
+  github: 'https://github.com/XavierLongview',
+  relay: '#', // link to Relay when it has a home
+  // GoatCounter site code (the "xyz" in https://xyz.goatcounter.com).
+  // Leave empty to ship zero analytics. Create a free account at
+  // https://www.goatcounter.com, pick a code, and paste it here.
   goatcounter: '',
 };
 
