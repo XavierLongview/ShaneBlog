@@ -6,10 +6,10 @@ interface Props {
 }
 const { current } = Astro.props;
 
+// Projects and About are still placeholder pages (no real content yet) —
+// left unlinked here on purpose. Add them back once they're written.
 const items = [
   { label: 'Essays', href: withBase('/'), key: 'essays' },
-  { label: 'Projects', href: withBase('/projects/'), key: 'projects' },
-  { label: 'About', href: withBase('/about/'), key: 'about' },
   { label: 'RSS', href: withBase('/rss.xml'), key: 'rss' },
 ];
 ---
