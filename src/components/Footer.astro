@@ -16,8 +16,8 @@ import { withBase } from '../lib/url';
       <div class="links">
         <a href={withBase('/rss.xml')}>RSS</a> ·
         <a href={`mailto:${SITE.email}`}>EMAIL</a> ·
-        <a href={SITE.github}>GITHUB</a> ·
-        <a href={SITE.relay}>RELAY</a>
+        <a href={SITE.github}>GITHUB</a>
+        {SITE.relay !== '#' && <> · <a href={SITE.relay}>RELAY</a></>}
       </div>
     </div>
   </div>

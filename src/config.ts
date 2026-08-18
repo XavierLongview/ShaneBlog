@@ -9,6 +9,8 @@ export const SITE = {
   // and used as the site description for SEO/RSS.
   standfirst:
     'Personal thoughts on product development in the age of automated intelligence; tenuous scribbles desperately shouted into the void. ',
+  // Footer slogan, between the two stars.
+  slogan: 'The future was kept public',
   email: 'scarroll825@gmail.com',
   github: 'https://github.com/XavierLongview',
   relay: '#', // link to Relay when it has a home
